@@ -136,42 +136,36 @@ dict_survey_options     = {"Strongly  disagree": -2, "Disagree ": -1, "Neutral":
 # Test phase setup
 stim_text_ai_prompt     = visual.TextStim(win,
                                           pos=(0, 0.50),
-                                          font=str_font
-                                          )
+                                          font=str_font)
 
 stim_text_label_a       = visual.TextStim(win,
                                          pos=(-0.75, 0.15),
                                          height=0.10,
                                          text="A",
-                                         font=str_font
-                                         )
+                                         font=str_font)
 
 stim_text_label_b       = visual.TextStim(win,
                                           pos=(-0.25, 0.15),
                                           height=0.10,
                                           text="B",
-                                          font=str_font
-                                          )
+                                          font=str_font)
 
 stim_text_label_c       = visual.TextStim(win,
                                           pos=(0.25, 0.15),
                                           height=0.10,
                                           text="C",
-                                          font=str_font
-                                          )
+                                          font=str_font)
 
 stim_text_label_d       = visual.TextStim(win,
                                           pos=(0.75, 0.15),
                                           height=0.10,
                                           text="D",
-                                          font=str_font
-                                          )
+                                          font=str_font)
 
 stim_text_ai_shown      = visual.TextStim(win,
                                           pos=(0, -0.75),
                                           height=0.065,
-                                          font=str_font
-                                          )
+                                          font=str_font)
 
 stim_slider_ai_prompt   = visual.Slider(win,
                                         style="radio",
@@ -180,32 +174,38 @@ stim_slider_ai_prompt   = visual.Slider(win,
                                         font=str_font,
                                         labelHeight=0.085,
                                         labelWrapWidth=0.45,
-                                        size=(0.52, 0.15)
-                                        )
+                                        size=(0.52, 0.15))
 
 
-questions = [['What brain regions were primarily involved in decision-making?'],
-             ['What is the "framing effect"?'],
-             ["How did cognitive effort differ when participants made gain-related decisions?"],
-             ['What theoretical explanation does the paper propose for the framing effect?'],
-             ['What does the theory of self efficacy primarily aim to explain?'],
-             ['What determines whether a person will initiate coping behavior?'],
-             ['Which of the following is NOT one of the four principal sources of self-efficacy?'],
-             ['What is the effect of persisting in activities that are subjectively threatening but actually safe?'],
-             ['What are the three components of adaptability in the EEG study on decision making?'],
-             ['What main concept is studied in relation to decision making in the EEG study?'],
-             ['What did the EEG findings suggest about theta power during the task performed by professionals?'],
-             ['What did the decrease in alpha activity in frontal regions compared to temporoparietal regions indicate?'],
-             ['What type of component, in addition to general information processing, contributes to g estimates?'],
-             ['Does using elementary cognitive tasks (ECTs) significantly change the predictive power of g for '
-              'scholastic performance?'],
-             ['What was the nature of the additional processing component found to contribute to g estimates?'],
-             ['What conclusion was drawn about defining g with elementary cognitive tasks (ECTs) alongside '
-              'traditional psychometric tasks?'],
-             ['What type of treatment produced the largest effect sizes for specific phobia?'],
-             ['Were placebo treatments more effective than no treatments for specific phobia?'],
-             ['Which statement best describes the effectiveness of in vivo exposure compared to other exposure methods?'],
-             ['What did the meta-analysis find regarding the influence of phobia type on treatment outcomes?']]
+questions               = [['What brain regions were primarily involved in decision-making?'],
+                           ['What is the "framing effect"?'],
+                           ["How did cognitive effort differ when participants made gain-related decisions?"],
+                           ['What theoretical explanation does the paper propose for the framing effect?'],
+                           ['What does the theory of self efficacy primarily aim to explain?'],
+                           ['What determines whether a person will initiate coping behavior?'],
+                           ['Which of the following is NOT one of the four principal sources of self-efficacy?'],
+                           ['What is the effect of persisting in activities that are subjectively threatening but '
+                            'actually safe?'],
+                           ['What are the three components of adaptability in the EEG study on decision making?'],
+                           ['What main concept is studied in relation to decision making in the EEG study?'],
+                           ['What did the EEG findings suggest about theta power during the task performed by '
+                            'professionals?'],
+                           ['What did the decrease in alpha activity in frontal regions compared to temporoparietal '
+                            'regions indicate?'],
+                           ['What type of component, in addition to general information processing, contributes to g '
+                            'estimates?'],
+                           ['Does using elementary cognitive tasks (ECTs) significantly change the predictive power '
+                            'of g for scholastic performance?'],
+                           ['What was the nature of the additional processing component found to contribute to g '
+                            'estimates?'],
+                           ['What conclusion was drawn about defining g with elementary cognitive tasks (ECTs) '
+                            'alongside traditional psychometric tasks?'],
+                           ['What type of treatment produced the largest effect sizes for specific phobia?'],
+                           ['Were placebo treatments more effective than no treatments for specific phobia?'],
+                           ['Which statement best describes the effectiveness of in vivo exposure compared to other '
+                            'exposure methods?'],
+                           ['What did the meta-analysis find regarding the influence of phobia type on treatment '
+                            'outcomes?']]
 
 correct_answers = [['Prefrontal and parietal cortices'],
                    ['People make different decisions depending on whether options are framed as gains or losses'],
@@ -393,10 +393,10 @@ if event.waitKeys(keyList=list_allowed_keys)[0] == 'escape':
     win.close()
     core.quit()
 
-stim_text_info.text = (f"If anything is unclear at this time or if you have questions at any point during the experiment,"
-                    f" raise your hand and the researcher will come to you. If you would like to stop "
-                    f"the experiment at any point, please let the researcher know.\n\n"
-                       + str_continue)
+stim_text_info.text     = (f"If anything is unclear at this time or if you have questions at any point during the "
+                           f"experiment, raise your hand and the researcher will come to you. If you would like to "
+                           f"stop the experiment at any point, please let the researcher know.\n\n")+ str_continue
+
 stim_text_info.draw()
 win.flip()
 if event.waitKeys(keyList=list_allowed_keys)[0] == 'escape':
@@ -404,13 +404,13 @@ if event.waitKeys(keyList=list_allowed_keys)[0] == 'escape':
     core.quit()
 
 # Study phase start
-stim_text_info.text = (f"In this part of the experiment, "
-                    f"you will study the content of five scientific texts. "
-                    "These texts are turned face down on your desk. Don't look at the texts yet. "
-                    "On the next screen a timer will start. You will get 20 minutes to study "
-                    "the texts. Afterwards, you are expected to complete a knowledge test "
-                    "(multiple choice exam) on the content of these texts. Please turn over the texts after the timer "
-                    "starts. You will be alerted when the timer runs out. \n\nPress the space bar to start the timer")
+stim_text_info.text     = (f"In this part of the experiment, you will study the content of five scientific texts. "
+                           f"These texts are turned face down on your desk. Don't look at the texts yet. On the next "
+                           f"screen a timer will start. You will get 20 minutes to study the texts. Afterwards, "
+                           f"you are expected to complete a knowledge test (multiple choice exam) on the content of "
+                           f"these texts. Please turn over the texts after the timer starts. You will be alerted when "
+                           f"the timer runs out. \n\nPress the space bar to start the timer")
+
 stim_text_info.draw()
 win.flip()
 if event.waitKeys(keyList=list_allowed_keys)[0] == 'escape':
@@ -418,10 +418,10 @@ if event.waitKeys(keyList=list_allowed_keys)[0] == 'escape':
     core.quit()
 
 # initialize countdown timer
-minutes = 0
-seconds = 3
-duration = minutes * 60 + seconds
-remaining_time = duration
+minutes                 = 0
+seconds                 = 3
+duration                = minutes * 60 + seconds
+remaining_time          = duration
 
 # show and update countdown timer
 for _ in range(duration):
@@ -445,10 +445,9 @@ for _ in range(flashes):
     win.flip()
     core.wait(0.5)
 
-stim_text_info.text = (
-    "Please hand over your texts to the researcher. You can now take a short break before moving on to the next part "
-    "of the experiment.\n\n"
-    "To end your break, press the space bar.")
+stim_text_info.text     = ("Please hand over your texts to the researcher. You can now take a short break before "
+                           "moving on to the next part of the experiment.\n\nTo end your break, press the space bar.")
+
 stim_text_info.draw()
 win.flip()
 if event.waitKeys(keyList=list_allowed_keys)[0] == 'escape':
@@ -456,10 +455,10 @@ if event.waitKeys(keyList=list_allowed_keys)[0] == 'escape':
     core.quit()
 
 # Survey start
-stim_text_info.text = ("In the next part of the experiment you will complete a short survey.\nFor every statement "
-                       "you see, please indicate how much you agree with that statement.\nBe careful! Once you "
-                       "select a response, you cannot go back and change it.\n\nPress the space bar to start the "
-                       "questionnaire")
+stim_text_info.text     = ("In the next part of the experiment you will complete a short survey.\nFor every statement "
+                           "you see, please indicate how much you agree with that statement.\nBe careful! Once you "
+                           "select a response, you cannot go back and change it.\n\nPress the space bar to start the "
+                           "questionnaire")
 
 stim_text_info.draw()
 win.flip()
@@ -468,7 +467,7 @@ if event.waitKeys(keyList=list_allowed_keys)[0] == 'escape':
     core.quit()
 
 for survey_idx in dict_survey_items: # this wil loop over all survey items
-    item = dict_survey_items[survey_idx]
+    item                = dict_survey_items[survey_idx]
     stim_text_survey_item.text = item
     stim_slider_survey.reset()
     my_clock.reset()
@@ -479,9 +478,9 @@ for survey_idx in dict_survey_items: # this wil loop over all survey items
         stim_slider_survey.draw()
         win.flip()
 
-    reaction_time = round(my_clock.getTime(), 3)  # round to 1 millisecond
+    reaction_time       = round(my_clock.getTime(), 3)  # round to 1 millisecond
 
-    item_score = dict_survey_options[stim_slider_survey.rating]
+    item_score          = dict_survey_options[stim_slider_survey.rating]
 
     experiment_handler.addData('survey_idx', survey_idx)
     experiment_handler.addData('survey_item', item)
@@ -491,8 +490,8 @@ for survey_idx in dict_survey_items: # this wil loop over all survey items
     experiment_handler.nextEntry()
 
 
-stim_text_info.text = ("You can now take a short break before moving on to the next part of the experiment.\n\n"
-                    "To end your break, press the space bar.")
+stim_text_info.text     = ("You can now take a short break before moving on to the next part of the experiment.\n\n"
+                           "To end your break, press the space bar.")
 stim_text_info.draw()
 win.flip()
 if event.waitKeys(keyList=list_allowed_keys)[0] == 'escape':
