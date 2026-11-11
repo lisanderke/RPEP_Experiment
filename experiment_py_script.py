@@ -15,6 +15,13 @@
 ##          Academic year 2026-2027           ##
 ##   ---------------------------------------  ##
 
+## README ##
+# variable names should follow the naming convention: category_subcategory_identifier
+# example: stim_text_countdown_timer
+# to indicate the stimulus (stim) category, the TextStim (text) subcategory, and the identifier (countdown_timer)
+#
+# Some special variables do not follow the naming convention
+
 # Import all relevant packages
 import os
 import time
@@ -22,141 +29,85 @@ import numpy as np
 import pandas as pd
 from psychopy import visual, event, core, gui, data
 
-### Data file management
+## Data file management
 # Set working directory to save participant data to same location as experiment script
-my_directory = os.getcwd() + "\\"
+str_working_directory   = os.getcwd() + "\\"
 
-# GUI, gathers participant number, gender and age
-info = {"Participant number": str(), "Gender": ('Female', 'Male', 'Other', 'Prefer not to say'), "Age": str()}
+# GUI, gathers participant number, gender and age -> will ask new participant number if number already in use
+dict_gui_info           = {"Participant number": str(),
+                           "Gender": ('Female', 'Male', 'Other', 'Prefer not to say'),
+                           "Age": str()}
+str_file_name           = ""
+bool_file_name          = True
 
-file_name = ""
-
-already_exists = True
-
-while already_exists:
-    myDlg = gui.DlgFromDict(dictionary=info, sortKeys=True)
-    folder = "ParticipantData"
-    file_name = folder + "\\ParticipantData_id" + str(info["Participant number"])
+while bool_file_name:
+    myDlg               = gui.DlgFromDict(dictionary=dict_gui_info, sortKeys=True)
+    folder              = "ParticipantData"
+    str_file_name       = folder + "\\ParticipantData_id" + str(dict_gui_info["Participant number"])
     if not myDlg.OK:
         print("User pressed cancel, experiment will shut down")
         core.quit()
-    if not os.path.isfile(my_directory + file_name + ".csv"):
-        already_exists = False
+    if not os.path.isfile(str_working_directory + str_file_name + ".csv"):
+        bool_file_name  = False
     else:
-        myDlg = gui.Dlg(title="Error")
+        myDlg           = gui.Dlg(title="Error")
         myDlg.addText("Try another participant number")
         myDlg.show()
 
 # Initiate the experiment handler, this tracks and adds data to
-thisExp = data.ExperimentHandler(dataFileName=f"{my_directory + file_name}", extraInfo=info)
+experiment_handler      = data.ExperimentHandler(dataFileName=f"{str_working_directory + str_file_name}",
+                                                 extraInfo=dict_gui_info)
 
-### Stimuli creation
+## Stimuli creation
 # General stimuli
-win = visual.Window(size=(800, 600), units="norm", fullscr=True)
+win                     = visual.Window(size=(1920, 1080), units="norm", fullscr=True)
 
-my_clock = core.Clock()
+my_clock                = core.Clock()
 
-key_list = ['space', 'escape']
+list_allowed_keys       = ['space', 'escape']
 
-font = "Arial"
+str_font                = "Arial"
 
-continue_text = "Press the space bar to continue"
+str_continue            = "Press the space bar to continue"
 
-text_screen = visual.TextStim(win, text="", font=font, alignText="left")
+stim_text_info          = visual.TextStim(win, font=str_font, alignText="left")
 
-countdown_timer = visual.TextStim(win, text="", font=font, height=0.4)
+stim_text_study_timer   = visual.TextStim(win, font=str_font, height=0.4)
 
-break_screen = visual.TextStim(win, text="You can now take a short break before moving on to the questionnaire.\n\n"
-                                         "To end your break, press the space bar.", font=font, alignText="left")
+stim_text_survey_prompt = visual.TextStim(win, font=str_font, pos=(0, -0.15))
 
-# Cognitive Test Anxiety Scale Revised (CTAR) stimuli setup
-questionnaires_intro = visual.TextStim(win, text=("In the next part of the experiment you will complete some short "
-                                                  "questionnaires.\n"
-                                                  "You will first be shown a brief explanation of the questionnaire."
-                                                  "\n\n"
-                                                  + continue_text), font=font, alignText="left")
+stim_text_survey_item   = visual.TextStim(win, font=str_font, pos=(0, 0.25))
 
-CTAR_explanation = visual.TextStim(win, text=("For every statement you see, please indicate how "
-                                              "typical it is for you."
-                                              "To choose an option, you must click on the corresponding option to "
-                                              "register your answer. Be careful, once you select an answer you cannot "
-                                              "go back and change it. \n\n"
-                                              + "Press the space bar to start the questionnaire"), font=font,
-                                   alignText="left")
+stim_slider_survey      = visual.Slider(win, font=str_font, pos=(0, -0.35), style="radio")
 
-CTAR_item = visual.TextStim(win=win, pos=(0, 0.25), text="", font=font)
+dict_ctar_resp_options  = {"Not at all": 0, "Somewhat": 1, "Quite": 2, "Very": 3}
 
-CTAR_question = visual.TextStim(win=win, pos=(0, -0.15), text="How typical is this for you?", font=font)
+dict_gaius_resp_options = {"Strongly  disagree": -2, "Disagree ": -1, "Neutral": 0, "Agree": 1, "Strongly  agree": 2}
 
-CTAR_slider = visual.Slider(win=win, pos=(0, -0.35), style="radio", labels=[
-    "Not at all", "Somewhat", "Quite", "Very"
-], ticks=[1, 2, 3, 4], units="norm", font=font)
+list_ctar_items         = ["I lose sleep over worrying about examinations.",
+                           "While taking an important examination, I find myself wondering whether the other students "
+                           "are doing better than I am.",
+                           "I tend to freeze up on things like intelligence tests and final exams.",
+                           "During tests, I find myself thinking of the consequences of failing.",
+                           "At the beginning of a test, I am so nervous that I often can't think straight.",
+                           "My mind goes blank when I am pressured for an answer on a test.",
+                           "During tests, the thought frequently occurs to me that I may not be too bright.",
+                           "During a course examination, I get so nervous that I forget facts I really know.",
+                           "After taking a test, I feel I should have done better than I actually did.",
+                           "During tests, I have the feeling that I am not doing well.",
+                           "When I take a test that is difficult, I feel defeated before I even start.",
+                           "I am a poor test taker in the sense that my performance on a test does not show how much I "
+                           "really know about a topic.",
+                           "I am not good at taking tests.",
+                           "When I first get my copy of a test, it takes me a while to calm down to the point where I "
+                           "can begin to think straight.",
+                           "When I take a test, my nervousness causes me to make careless errors."]
 
-CTAR_response_options = {"Not at all": 0, "Somewhat": 1, "Quite": 2, "Very": 3}
-
-CTAR_item_list = [
-    "I lose sleep over worrying about examinations.",
-    "While taking an important examination, I find myself wondering whether the other students are doing better than "
-    "I am.",
-    "I tend to freeze up on things like intelligence tests and final exams.",
-    "During tests, I find myself thinking of the consequences of failing.",
-    "At the beginning of a test, I am so nervous that I often can't think straight.",
-    "My mind goes blank when I am pressured for an answer on a test.",
-    "During tests, the thought frequently occurs to me that I may not be too bright.",
-    "During a course examination, I get so nervous that I forget facts I really know.",
-    "After taking a test, I feel I should have done better than I actually did.",
-    # "I worry more about doing well on tests than I should.",
-    "During tests, I have the feeling that I am not doing well.",
-    "When I take a test that is difficult, I feel defeated before I even start.",
-    "I am a poor test taker in the sense that my performance on a test does not show how much I really know about a "
-    "topic.",
-    "I am not good at taking tests.",
-    # "I do not perform well on tests.",
-    "When I first get my copy of a test, it takes me a while to calm down to the point where I can begin to think "
-    "straight.",
-    "When I take a test, my nervousness causes me to make careless errors.",
-    ### Eliminated 2 items above because they're similar
-
-    # "I get distracted from studying for tests by thoughts of failing.",
-    # "I have difficulty remembering what I studied for tests.",
-    # "While preparing for a test, I often think that I am likely to fail.",
-    # "My test performances make me believe that I am not a good student.",
-    # "I often realize mistakes I made right after turning in a test.",
-    # "When I finish a hard test, I am afraid to see the score.",
-    # "When I get a good grade on a test, it is usually because I got lucky.",
-    # "I don't seem to have much control over my test scores.",
-
-    ### eliminated 8 items due to https://doi.org/10.1080/10627197.2014.934604
-]
-
-GAIUS_explanation = visual.TextStim(win, text=("The second and last questionnaire consists of 5 statements. "
-                                               "After reading a statement, you must indicate how much you disagree or "
-                                               "agree with the statement."
-                                               "To choose an option, you must click on the corresponding option to "
-                                               "register your answer. Be careful, once you select an answer you "
-                                               "cannot go back and change it. You can choose between the following "
-                                               "four options: \n"
-                                               "'Strongly disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly "
-                                               "agree'\n\n"
-                                               + "Press the space bar to start the questionnaire"), font=font,
-                                    alignText="left")
-
-GAIUS_item = visual.TextStim(win=win, pos=(0, 0.25), text="", font=font)
-GAIUS_question = visual.TextStim(win=win, pos=(0, -0.15), text="Do you agree with this statement?", font=font)
-GAIUS_slider = visual.Slider(win=win, pos=(0, -0.35), style="radio", labels=[
-    "Strongly  disagree", "Disagree ", "Neutral", "Agree", "Strongly  agree"
-], ticks=[1, 2, 3, 4, 5], units="norm", font=font)
-
-GAIUS_response_options = {"Strongly  disagree": -2, "Disagree ": -1, "Neutral": 0, "Agree": 1, "Strongly  agree": 2}
-
-GAIUS_item_list = [
-    "GenAI tools (e.g. ChatGPT) should be integrated into the classroom.",
-    "GenAI tools (e.g. ChatGPT) can help me save time.",
-    "GenAI tools (e.g. ChatGPT) can provide me with new ideas that I may not have thought of myself.",
-    "GenAI tools (e.g. ChatGPT) can provide me with feed-back on my assignments.",
-    "I use GenAI tools (e.g. ChatGPT) because it can provide academic support services (e.g. answer my questions, "
-    "summarise readings, etc.)",
-
+list_gaius_items        = ["GenAI tools (e.g. ChatGPT) should be integrated into the classroom.",
+                           "GenAI tools (e.g. ChatGPT) can help me save time.",
+                           "GenAI tools (e.g. ChatGPT) can provide me with new ideas that I may not have thought of myself.",
+                           "GenAI tools (e.g. ChatGPT) can provide me with feed-back on my assignments.",
+                           "I use GenAI tools (e.g. ChatGPT) because it can provide academic support services (e.g. answer my questions, summarise readings, etc.)",
     # "Students must learn how to use GenAI tools well for their careers.",
     # "GenAI tools (e.g. ChatGPT) can improve my digital competence.",
     # "I use GenAI tools (e.g. ChatGPT) because it is available and accessible 24/7.",
@@ -171,38 +122,29 @@ GAIUS_item_list = [
     # "GenAI tools (e.g. ChatGPT) encourage and facilitate academic misconduct.",
     # "I use GenAI tools (e.g. ChatGPT) in class activities without the instructor’s permission.",
     # "I use GenAI tools (e.g. ChatGPT) for class activities without acknowledging the help of the GenAI tools.",
-]
-
-# https://doi.org/10.1080/14703297.2025.2603622
+                           ]
 
 # Test phase setup
 
-test_intro = visual.TextStim(win, text=(
-        f"You will now complete the multiple choice exam based on the texts you studied. There are 20 questions "
-        f"in total. For each question, you will get the opportunity to use AI to help you solve the question. "
-        f"However, please be aware that the AI can make mistakes.\n"
-        f"Before the exam starts, an example question will be shown so you can try asking the AI for help.\n"
-        + continue_text), font=font, alignText="left")
+test_practice = visual.TextStim(win, text=f"", font=str_font, alignText="left")
 
-test_practice = visual.TextStim(win, text=f"", font=font, alignText="left")
+test_question = visual.TextStim(win=win, pos=(0, 0.50), text="", font=str_font)
 
-test_question = visual.TextStim(win=win, pos=(0, 0.50), text="", font=font)
+test_label_A = visual.TextStim(win=win, pos=(-0.75, 0.15), height=0.10, text="A", font=str_font)
+test_label_B = visual.TextStim(win=win, pos=(-0.25, 0.15), height=0.10, text="B", font=str_font)
+test_label_C = visual.TextStim(win=win, pos=(0.25, 0.15), height=0.10, text="C", font=str_font)
+test_label_D = visual.TextStim(win=win, pos=(0.75, 0.15), height=0.10, text="D", font=str_font)
 
-test_label_A = visual.TextStim(win=win, pos=(-0.75, 0.15), height=0.10, text="A", font=font)
-test_label_B = visual.TextStim(win=win, pos=(-0.25, 0.15), height=0.10, text="B", font=font)
-test_label_C = visual.TextStim(win=win, pos=(0.25, 0.15), height=0.10, text="C", font=font)
-test_label_D = visual.TextStim(win=win, pos=(0.75, 0.15), height=0.10, text="D", font=font)
+test_halfway_break = visual.TextStim(win=win, font=str_font)
 
-test_halfway_break = visual.TextStim(win=win, font=font)
-
-test_answers = visual.TextStim(win=win, pos=(-0.25, -0.75), height=0.065, text="", font=font)
+test_answers = visual.TextStim(win=win, pos=(-0.25, -0.75), height=0.065, text="", font=str_font)
 
 ai_slider = visual.Slider(win=win, pos=(0, 0), style="radio",
                           labels=["Yes", "No"],
-                          ticks=[1, 2], units="norm", font=font, labelHeight=0.085, labelWrapWidth=0.45,
+                          ticks=[1, 2], units="norm", font=str_font, labelHeight=0.085, labelWrapWidth=0.45,
                           size=(0.52, 0.15))
 
-yes_ai_use = visual.TextStim(win=win, pos=(0, -0.75), height=0.065, text="", font=font)
+yes_ai_use = visual.TextStim(win=win, pos=(0, -0.75), height=0.065, text="", font=str_font)
 
 questions = [['What brain regions were primarily involved in decision-making?'],
              ['What is the "framing effect"?'],
@@ -385,52 +327,52 @@ trials = data.TrialHandler(trial_list, nReps=1, method='sequential')
 total_time = core.Clock()
 start_time = time.strftime("%H:%M:%S", time.localtime())
 
-text_screen.text = (
+stim_text_info.text = (
         f"Hello and welcome to this experiment! Please read all instructions carefully. In this experiment, "
         f"you will study a few texts, complete a questionnaire, and then take part in an exam. You will get 20 "
         f"minutes to study.\n\n"
         + "Press the space bar to receive the next part of the instructions")
-text_screen.draw()
+stim_text_info.draw()
 win.flip()
-key_press = event.waitKeys(keyList=key_list)
+key_press = event.waitKeys(keyList=list_allowed_keys)
 if key_press[0] == 'escape':
     win.close()
     core.quit()
 
-text_screen.text = (
+stim_text_info.text = (
         f"During the exam, you will have the opportunity to use generative artificial intelligence (AI). For each "
         f"question, you can choose to solve the question with or without AI. While using AI could help you solve "
         f"the questions, please be aware that the AI can make mistakes. \n\n"
-        + continue_text)
-text_screen.draw()
+        + str_continue)
+stim_text_info.draw()
 win.flip()
-key_press = event.waitKeys(keyList=key_list)
+key_press = event.waitKeys(keyList=list_allowed_keys)
 if key_press[0] == 'escape':
     win.close()
     core.quit()
 
-text_screen.text = (f"If anything is unclear at this time or if you have questions at any point during the experiment,"
+stim_text_info.text = (f"If anything is unclear at this time or if you have questions at any point during the experiment,"
                     f" raise your hand and the researcher will come to you. If you would like to stop "
                     f"the experiment at any point, please let the researcher know.\n\n"
-                    + continue_text)
-text_screen.draw()
+                       + str_continue)
+stim_text_info.draw()
 win.flip()
-key_press = event.waitKeys(keyList=key_list)
+key_press = event.waitKeys(keyList=list_allowed_keys)
 if key_press[0] == 'escape':
     win.close()
     core.quit()
 
 # Study phase start
-text_screen.text = (f"In this part of the experiment, "
+stim_text_info.text = (f"In this part of the experiment, "
                     f"you will study the content of five scientific texts. "
                     "These texts are turned face down on your desk. Don't look at the texts yet. "
                     "On the next screen a timer will start. You will get 20 minutes to study "
                     "the texts. Afterwards, you are expected to complete a knowledge test "
                     "(multiple choice exam) on the content of these texts. Please turn over the texts after the timer "
                     "starts. You will be alerted when the timer runs out. \n\nPress the space bar to start the timer")
-text_screen.draw()
+stim_text_info.draw()
 win.flip()
-key_press = event.waitKeys(keyList=key_list)
+key_press = event.waitKeys(keyList=list_allowed_keys)
 if key_press[0] == 'escape':
     win.close()
     core.quit()
@@ -442,9 +384,9 @@ remaining_time = duration
 flashes = 3
 
 for _ in range(duration):
-    countdown_timer.text = (f"{remaining_time // 60 if remaining_time // 60 >= 10 else f'0{remaining_time // 60}'}:"
+    stim_text_study_timer.text = (f"{remaining_time // 60 if remaining_time // 60 >= 10 else f'0{remaining_time // 60}'}:"
                             f"{remaining_time % 60 if remaining_time % 60 >= 10 else f'0{remaining_time % 60}'}")
-    countdown_timer.draw()
+    stim_text_study_timer.draw()
     win.flip()
     key_press = event.waitKeys(keyList="escape", maxWait=1)
     if key_press and key_press[0] == 'escape':
@@ -460,67 +402,105 @@ for _ in range(flashes):
     win.flip()
     core.wait(0.5)
 
-text_screen.text = (
+stim_text_info.text = (
     "Please hand over your texts to the researcher. You can now take a short break before moving on to the next part "
     "of the experiment.\n\n"
     "To end your break, press the space bar.")
-text_screen.draw()
+stim_text_info.draw()
 win.flip()
-key_press = event.waitKeys(keyList=key_list)
+key_press = event.waitKeys(keyList=list_allowed_keys)
 if key_press[0] == 'escape':
     win.close()
     core.quit()
 
-questionnaires_intro.draw()
+stim_text_info.text = ("In the next part of the experiment you will complete some short "
+                                                  "questionnaires.\n"
+                                                  "You will first be shown a brief explanation of the questionnaire."
+                                                  "\n\n"
+                       + str_continue)
+
+stim_text_info.draw()
 win.flip()
-key_press = event.waitKeys(keyList=key_list)
+key_press = event.waitKeys(keyList=list_allowed_keys)
 if key_press[0] == 'escape':
     win.close()
     core.quit()
 
-CTAR_explanation.draw()
+stim_text_info.text = ("For every statement you see, please indicate how "
+                                              "typical it is for you."
+                                              "To choose an option, you must click on the corresponding option to "
+                                              "register your answer. Be careful, once you select an answer you cannot "
+                                              "go back and change it. \n\n"
+                       + "Press the space bar to start the questionnaire")
+
+stim_text_info.draw()
 win.flip()
-key_press = event.waitKeys(keyList=key_list)
+key_press = event.waitKeys(keyList=list_allowed_keys)
 if key_press[0] == 'escape':
     win.close()
     core.quit()
+
+stim_text_survey_prompt.text = "How typical is this for you?"
+stim_slider_survey.labels = ["Not at all", "Somewhat", "Quite", "Very"]
+stim_slider_survey.ticks = [1, 2, 3, 4]
 
 idx = 0
 total_score = 0
-for item in CTAR_item_list:
-    CTAR_item.text = item
+for item in list_ctar_items:
+    stim_text_survey_item.text = item
     idx += 1
-    CTAR_slider.reset()
+    stim_slider_survey.reset()
     my_clock.reset()
-    while not CTAR_slider.rating:  # this loop shows the slider until a response has been selected
-        CTAR_item.draw()
-        CTAR_question.draw()
-        CTAR_slider.draw()
+    while not stim_slider_survey.rating:  # this loop shows the slider until a response has been selected
+        stim_text_survey_item.draw()
+        stim_text_survey_prompt.draw()
+        stim_slider_survey.draw()
         win.flip()
     reaction_time = round(my_clock.getTime(), 3)  # round to 1 millisecond
 
-    item_score = CTAR_response_options[CTAR_slider.rating]
+    item_score = dict_ctar_resp_options[stim_slider_survey.rating]
     total_score += item_score
-    thisExp.addData('CTAR_idx', idx)
-    thisExp.addData('CTAR_item', item)
-    thisExp.addData('CTAR_response', CTAR_slider.rating)
-    thisExp.addData('CTAR_response_score', item_score)
-    thisExp.addData('CTAR_total', total_score)
-    thisExp.addData('CTAR_rt_s', reaction_time)
-    thisExp.nextEntry()
+    experiment_handler.addData('CTAR_idx', idx)
+    experiment_handler.addData('CTAR_item', item)
+    experiment_handler.addData('CTAR_response', stim_slider_survey.rating)
+    experiment_handler.addData('CTAR_response_score', item_score)
+    experiment_handler.addData('CTAR_total', total_score)
+    experiment_handler.addData('CTAR_rt_s', reaction_time)
+    experiment_handler.nextEntry()
 
-text_screen.text = ("You can now take a short break before moving on to the next part of the experiment.\n\n"
+
+stim_text_survey_prompt.text = "Do you agree with this statement?"
+stim_slider_survey.labels = ["Not at all", "Somewhat", "Quite", "Very"]
+stim_slider_survey.ticks = [1, 2, 3, 4]
+
+GAIUS_question = visual.TextStim(win=win, pos=(0, -0.15), text="Do you agree with this statement?", font=str_font)
+GAIUS_slider = visual.Slider(win=win, pos=(0, -0.35), style="radio",
+                             labels=["Strongly  disagree", "Disagree ", "Neutral", "Agree", "Strongly  agree"],
+                             ticks=[1, 2, 3, 4, 5], units="norm", font=str_font)
+
+
+for item in list_gaius_items:
+    stim_text_survey_item.text = item
+
+
+stim_text_info.text = ("You can now take a short break before moving on to the next part of the experiment.\n\n"
                     "To end your break, press the space bar.")
-text_screen.draw()
+stim_text_info.draw()
 win.flip()
-key_press = event.waitKeys(keyList=key_list)
+key_press = event.waitKeys(keyList=list_allowed_keys)
 if key_press[0] == 'escape':
     win.close()
     core.quit()
 
-test_intro.draw()
+stim_text_info.text = (
+        f"You will now complete the multiple choice exam based on the texts you studied. There are 20 questions "
+        f"in total. For each question, you will get the opportunity to use AI to help you solve the question. "
+        f"However, please be aware that the AI can make mistakes.\n"
+        f"Before the exam starts, an example question will be shown so you can try asking the AI for help.\n"
+        + str_continue)
+stim_text_info.draw()
 win.flip()
-key_press = event.waitKeys(keyList=key_list)
+key_press = event.waitKeys(keyList=list_allowed_keys)
 if key_press[0] == 'escape':
     win.close()
     core.quit()
@@ -550,14 +530,14 @@ for trial in trials:
     if test_half == "second_half" and counter == 0:
         test_halfway_break.text = (f"This is the halfway point of the test. \nSo far, your score is "
                                    f"{test_score}/{int(trial['exp_indexes'])}. \nYou used GAI {total_ai_use} times. "
-                                   f"\n\n") + continue_text
+                                   f"\n\n") + str_continue
         test_halfway_break.draw()
         win.flip()
-        key_press = event.waitKeys(keyList=key_list)
+        key_press = event.waitKeys(keyList=list_allowed_keys)
         if key_press[0] == 'escape':
             win.close()
             core.quit()
-        thisExp.addData("break_screen", "yes")
+        experiment_handler.addData("break_screen", "yes")
         counter += 1
 
     # Show test question, then ask if they want to use AI
@@ -585,7 +565,7 @@ for trial in trials:
             answer_B = answers.pop(0)
         test_slider = visual.Slider(win=win, pos=(0, 0), style="radio",
                                     labels=[answer_A, answer_B],
-                                    ticks=[1, 2], units="norm", font=font, labelHeight=0.085, labelWrapWidth=0.45,
+                                    ticks=[1, 2], units="norm", font=str_font, labelHeight=0.085, labelWrapWidth=0.45,
                                     size=(0.52, 0.15))
 
         answers = [answer_A, answer_B]
@@ -631,7 +611,7 @@ for trial in trials:
 
         test_slider = visual.Slider(win=win, pos=(0, 0), style="radio",
                                     labels=[answer_A, answer_B, answer_C, answer_D],
-                                    ticks=[1, 2, 3, 4], units="norm", font=font, labelHeight=0.085, labelWrapWidth=0.45,
+                                    ticks=[1, 2, 3, 4], units="norm", font=str_font, labelHeight=0.085, labelWrapWidth=0.45,
                                     size=(1.5, 0.15))
         if trial["ai_accuracy"] == "correct":
             yes_ai_use.text = f"AI says the correct answer is: either {options[numbers[0]]} or {options[numbers[1]]}"
@@ -661,69 +641,69 @@ for trial in trials:
     total_answer_rt += reaction_time
     total_ai_use_rt += ai_use_rt
 
-    thisExp.addData("text_index", trial["text_id"])
-    thisExp.addData("test_half", test_half)
-    thisExp.addData("question_index", trial["indexes"])
-    thisExp.addData("thisexp_question_index", trial["exp_indexes"])
-    thisExp.addData("question", trial["test_question"])
-    thisExp.addData("answer_A", answer_A)
-    thisExp.addData("answer_B", answer_B)
-    thisExp.addData("answer_C", answer_C)
-    thisExp.addData("answer_D", answer_D)
-    thisExp.addData("difficulty", trial["test_difficulty"])
-    thisExp.addData("correct_letter", correct_answer)
-    thisExp.addData("chosen_letter", chosen_answer)
-    thisExp.addData('rt_answer', reaction_time)
-    thisExp.addData("rt_total_answer", round(total_answer_rt, 3))
-    thisExp.addData("correct_answer", trial["test_correct_answer"])
-    thisExp.addData("chosen_answer", test_slider.rating)
-    thisExp.addData("accuracy", score)
-    thisExp.addData("total_score", test_score)
-    thisExp.addData("ai_use", ai_use)
-    thisExp.addData("total_ai_use", total_ai_use)
-    thisExp.addData('rt_ai_use', ai_use_rt)
-    thisExp.addData('rt_total_ai_use', round(total_ai_use_rt, 3))
+    experiment_handler.addData("text_index", trial["text_id"])
+    experiment_handler.addData("test_half", test_half)
+    experiment_handler.addData("question_index", trial["indexes"])
+    experiment_handler.addData("thisexp_question_index", trial["exp_indexes"])
+    experiment_handler.addData("question", trial["test_question"])
+    experiment_handler.addData("answer_A", answer_A)
+    experiment_handler.addData("answer_B", answer_B)
+    experiment_handler.addData("answer_C", answer_C)
+    experiment_handler.addData("answer_D", answer_D)
+    experiment_handler.addData("difficulty", trial["test_difficulty"])
+    experiment_handler.addData("correct_letter", correct_answer)
+    experiment_handler.addData("chosen_letter", chosen_answer)
+    experiment_handler.addData('rt_answer', reaction_time)
+    experiment_handler.addData("rt_total_answer", round(total_answer_rt, 3))
+    experiment_handler.addData("correct_answer", trial["test_correct_answer"])
+    experiment_handler.addData("chosen_answer", test_slider.rating)
+    experiment_handler.addData("accuracy", score)
+    experiment_handler.addData("total_score", test_score)
+    experiment_handler.addData("ai_use", ai_use)
+    experiment_handler.addData("total_ai_use", total_ai_use)
+    experiment_handler.addData('rt_ai_use', ai_use_rt)
+    experiment_handler.addData('rt_total_ai_use', round(total_ai_use_rt, 3))
 
-    thisExp.addData("ai_accuracy", trial["ai_accuracy"])
+    experiment_handler.addData("ai_accuracy", trial["ai_accuracy"])
     if ai_use:
         if trial["test_difficulty"] == "hard":
             if trial["ai_accuracy"] == "correct":
-                thisExp.addData("correct_shown_ai", options[show_correct_idx])
-                thisExp.addData("incorrect_shown_ai", options[number])
+                experiment_handler.addData("correct_shown_ai", options[show_correct_idx])
+                experiment_handler.addData("incorrect_shown_ai", options[number])
             else:
-                thisExp.addData("correct_shown_ai", "None")
-                thisExp.addData("incorrect_shown_ai", f"{options[numbers_incorrect[0]]} & "
+                experiment_handler.addData("correct_shown_ai", "None")
+                experiment_handler.addData("incorrect_shown_ai", f"{options[numbers_incorrect[0]]} & "
                                                       f"{options[numbers_incorrect[1]]}")
 
         else:
             if trial["ai_accuracy"] == "correct":
-                thisExp.addData("correct_shown_ai", options[0 if trial['test_correct_answer'] == answer_A else 1])
-                thisExp.addData("incorrect_shown_ai", "None")
+                experiment_handler.addData("correct_shown_ai", options[0 if trial['test_correct_answer'] == answer_A else 1])
+                experiment_handler.addData("incorrect_shown_ai", "None")
             else:
-                thisExp.addData("correct_shown_ai", "None")
-                thisExp.addData("incorrect_shown_ai",
-                                options[0 if trial['test_correct_answer'] != answer_A else 1])
+                experiment_handler.addData("correct_shown_ai", "None")
+                experiment_handler.addData("incorrect_shown_ai",
+                                           options[0 if trial['test_correct_answer'] != answer_A else 1])
     else:
-        thisExp.addData("correct_shown_ai", "None")
-        thisExp.addData("incorrect_shown_ai", "None")
+        experiment_handler.addData("correct_shown_ai", "None")
+        experiment_handler.addData("incorrect_shown_ai", "None")
 
-    key_press = event.getKeys(keyList=key_list)
+    key_press = event.getKeys(keyList=list_allowed_keys)
     if key_press and key_press[0] == 'escape':
         break
-    thisExp.nextEntry()
+    experiment_handler.nextEntry()
 
 total_time = round(total_time.getTime(), 3)  # round to 1 millisecond
-thisExp.addData("date", time.strftime("%Y_%m_%d", time.localtime()))
-thisExp.addData("start_time", start_time)
-thisExp.addData("end_time", time.strftime("%H:%M:%S", time.localtime()))
-thisExp.addData("total_time_s", total_time)
+experiment_handler.addData("date", time.strftime("%Y_%m_%d", time.localtime()))
+experiment_handler.addData("start_time", start_time)
+experiment_handler.addData("end_time", time.strftime("%H:%M:%S", time.localtime()))
+experiment_handler.addData("total_time_s", total_time)
 
-text_screen.text = ("This is the end of the experiment.\n\n"
+stim_text_info.text = ("This is the end of the experiment.\n\n"
                     f"Your final score is {test_score}/20. \nYou used GAI {total_ai_use} times. \n\n"
                     "Signal to the experimenter that you have completed the test.\n\n"
                     "Thank you very much for your participation!\n\n")
-text_screen.draw()
+stim_text_info.draw()
 win.flip()
-key_press = event.waitKeys(keyList=key_list)
+key_press = event.waitKeys(keyList=list_allowed_keys)
 win.close()
 core.quit()
