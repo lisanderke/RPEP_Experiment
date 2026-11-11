@@ -19,7 +19,6 @@
 # variable names should follow the naming convention: category_subcategory_identifier
 # example: stim_text_countdown_timer
 # to indicate the stimulus (stim) category, the TextStim (text) subcategory, and the identifier (countdown_timer)
-#
 # Some special variables do not follow the naming convention
 
 # Import all relevant packages
@@ -36,7 +35,8 @@ str_working_directory   = os.getcwd() + "\\"
 # GUI, gathers participant number, gender and age -> will ask new participant number if number already in use
 dict_gui_info           = {"Participant number": str(),
                            "Gender": ('Female', 'Male', 'Other', 'Prefer not to say'),
-                           "Age": str()}
+                           "Age": str()
+                           }
 str_file_name           = ""
 bool_file_name          = True
 
@@ -70,15 +70,42 @@ str_font                = "Arial"
 
 str_continue            = "Press the space bar to continue"
 
-stim_text_info          = visual.TextStim(win, font=str_font, alignText="left")
+stim_text_info          = visual.TextStim(win,
+                                          font=str_font,
+                                          alignText="left"
+                                          )
 
-stim_text_study_timer   = visual.TextStim(win, font=str_font, height=0.4)
+stim_text_study_timer   = visual.TextStim(win,
+                                          font=str_font,
+                                          height=0.4
+                                          )
 
-stim_text_survey_prompt = visual.TextStim(win, font=str_font, pos=(0, -0.15))
+stim_text_survey_prompt = visual.TextStim(win,
+                                          font=str_font,
+                                          pos=(0, -0.15)
+                                          )
 
-stim_text_survey_item   = visual.TextStim(win, font=str_font, pos=(0, 0.25))
+stim_text_survey_item   = visual.TextStim(win,
+                                          font=str_font,
+                                          pos=(0, 0.25)
+                                          )
 
-stim_slider_survey      = visual.Slider(win, font=str_font, pos=(0, -0.35), style="radio")
+stim_slider_ctar        = visual.Slider(win,
+                                        font=str_font,
+                                        pos=(0, -0.35),
+                                        style="radio",
+                                        labels=["Not at all", "Somewhat", "Quite", "Very"],
+                                        ticks=[1, 2, 3, 4]
+                                        )
+
+stim_slider_gaius       = visual.Slider(win,
+                                        font=str_font,
+                                        pos=(0, -0.35),
+                                        style="radio",
+                                        labels=["Strongly  disagree", "Disagree ", "Neutral", "Agree",
+                                                "Strongly  agree"],
+                                        ticks=[1, 2, 3, 4, 5]
+                                        )
 
 dict_ctar_resp_options  = {"Not at all": 0, "Somewhat": 1, "Quite": 2, "Very": 3}
 
@@ -413,8 +440,7 @@ if key_press[0] == 'escape':
     win.close()
     core.quit()
 
-stim_text_info.text = ("In the next part of the experiment you will complete some short "
-                                                  "questionnaires.\n"
+stim_text_info.text = ("In the next part of the experiment you will complete some short questionnaires.\n"
                                                   "You will first be shown a brief explanation of the questionnaire."
                                                   "\n\n"
                        + str_continue)
@@ -441,28 +467,26 @@ if key_press[0] == 'escape':
     core.quit()
 
 stim_text_survey_prompt.text = "How typical is this for you?"
-stim_slider_survey.labels = ["Not at all", "Somewhat", "Quite", "Very"]
-stim_slider_survey.ticks = [1, 2, 3, 4]
 
 idx = 0
 total_score = 0
 for item in list_ctar_items:
     stim_text_survey_item.text = item
     idx += 1
-    stim_slider_survey.reset()
+    stim_slider_ctar.reset()
     my_clock.reset()
-    while not stim_slider_survey.rating:  # this loop shows the slider until a response has been selected
+    while not stim_slider_ctar.rating:  # this loop shows the slider until a response has been selected
         stim_text_survey_item.draw()
         stim_text_survey_prompt.draw()
-        stim_slider_survey.draw()
+        stim_slider_ctar.draw()
         win.flip()
     reaction_time = round(my_clock.getTime(), 3)  # round to 1 millisecond
 
-    item_score = dict_ctar_resp_options[stim_slider_survey.rating]
+    item_score = dict_ctar_resp_options[stim_slider_ctar.rating]
     total_score += item_score
     experiment_handler.addData('CTAR_idx', idx)
     experiment_handler.addData('CTAR_item', item)
-    experiment_handler.addData('CTAR_response', stim_slider_survey.rating)
+    experiment_handler.addData('CTAR_response', stim_slider_ctar.rating)
     experiment_handler.addData('CTAR_response_score', item_score)
     experiment_handler.addData('CTAR_total', total_score)
     experiment_handler.addData('CTAR_rt_s', reaction_time)
@@ -470,17 +494,15 @@ for item in list_ctar_items:
 
 
 stim_text_survey_prompt.text = "Do you agree with this statement?"
-stim_slider_survey.labels = ["Not at all", "Somewhat", "Quite", "Very"]
-stim_slider_survey.ticks = [1, 2, 3, 4]
-
-GAIUS_question = visual.TextStim(win=win, pos=(0, -0.15), text="Do you agree with this statement?", font=str_font)
-GAIUS_slider = visual.Slider(win=win, pos=(0, -0.35), style="radio",
-                             labels=["Strongly  disagree", "Disagree ", "Neutral", "Agree", "Strongly  agree"],
-                             ticks=[1, 2, 3, 4, 5], units="norm", font=str_font)
-
 
 for item in list_gaius_items:
     stim_text_survey_item.text = item
+
+    while not stim_slider_gaius.rating:
+        stim_text_survey_item.draw()
+        stim_text_survey_prompt.draw()
+        stim_slider_gaius.draw()
+        win.flip()
 
 
 stim_text_info.text = ("You can now take a short break before moving on to the next part of the experiment.\n\n"
