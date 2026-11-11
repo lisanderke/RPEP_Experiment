@@ -134,26 +134,55 @@ dict_survey_items       = {"ctar_01": "I lose sleep over worrying about exams.",
 dict_survey_options     = {"Strongly  disagree": -2, "Disagree ": -1, "Neutral": 0, "Agree": 1, "Strongly  agree": 2}
 
 # Test phase setup
+stim_text_ai_prompt     = visual.TextStim(win,
+                                          pos=(0, 0.50),
+                                          font=str_font
+                                          )
 
-test_practice = visual.TextStim(win, text=f"", font=str_font, alignText="left")
+stim_text_label_a       = visual.TextStim(win,
+                                         pos=(-0.75, 0.15),
+                                         height=0.10,
+                                         text="A",
+                                         font=str_font
+                                         )
 
-test_question = visual.TextStim(win=win, pos=(0, 0.50), text="", font=str_font)
+stim_text_label_b       = visual.TextStim(win,
+                                          pos=(-0.25, 0.15),
+                                          height=0.10,
+                                          text="B",
+                                          font=str_font
+                                          )
 
-test_label_A = visual.TextStim(win=win, pos=(-0.75, 0.15), height=0.10, text="A", font=str_font)
-test_label_B = visual.TextStim(win=win, pos=(-0.25, 0.15), height=0.10, text="B", font=str_font)
-test_label_C = visual.TextStim(win=win, pos=(0.25, 0.15), height=0.10, text="C", font=str_font)
-test_label_D = visual.TextStim(win=win, pos=(0.75, 0.15), height=0.10, text="D", font=str_font)
+stim_text_label_c       = visual.TextStim(win,
+                                          pos=(0.25, 0.15),
+                                          height=0.10,
+                                          text="C",
+                                          font=str_font
+                                          )
 
-test_halfway_break = visual.TextStim(win=win, font=str_font)
+stim_text_label_d       = visual.TextStim(win,
+                                          pos=(0.75, 0.15),
+                                          height=0.10,
+                                          text="D",
+                                          font=str_font
+                                          )
 
-test_answers = visual.TextStim(win=win, pos=(-0.25, -0.75), height=0.065, text="", font=str_font)
+stim_text_ai_shown      = visual.TextStim(win,
+                                          pos=(0, -0.75),
+                                          height=0.065,
+                                          font=str_font
+                                          )
 
-ai_slider = visual.Slider(win=win, pos=(0, 0), style="radio",
-                          labels=["Yes", "No"],
-                          ticks=[1, 2], units="norm", font=str_font, labelHeight=0.085, labelWrapWidth=0.45,
-                          size=(0.52, 0.15))
+stim_slider_ai_prompt   = visual.Slider(win,
+                                        style="radio",
+                                        labels=["Yes", "No"],
+                                        ticks=[1, 2],
+                                        font=str_font,
+                                        labelHeight=0.085,
+                                        labelWrapWidth=0.45,
+                                        size=(0.52, 0.15)
+                                        )
 
-yes_ai_use = visual.TextStim(win=win, pos=(0, -0.75), height=0.065, text="", font=str_font)
 
 questions = [['What brain regions were primarily involved in decision-making?'],
              ['What is the "framing effect"?'],
@@ -280,23 +309,28 @@ ai_correctness = np.array([
     ["incorrect"],
 ])
 
-rng = np.random.default_rng()
+rng                     = np.random.default_rng()
 
-n_test_items = len(questions)
+n_test_items            = len(questions)
 
-test_score = int()
+test_score              = int()
 
-indexes = np.array([[f"{x}"] for x in range(20)])
-exp_indexes = indexes
-text_id = [[0], [0], [0], [0], [1], [1], [1], [1], [2], [2], [2], [2], [3], [3], [3], [3], [4], [4], [4], [4]]
-text_id = np.array(text_id, dtype=np.dtypes.StringDType)
-questions = np.array(questions, dtype=np.dtypes.StringDType)
-correct_answers = np.array(correct_answers, dtype=np.dtypes.StringDType)
-incorrect_column_1 = np.array(incorrect_column_1, dtype=np.dtypes.StringDType)
-incorrect_column_2 = np.array(incorrect_column_2, dtype=np.dtypes.StringDType)
-incorrect_column_3 = np.array(incorrect_column_3, dtype=np.dtypes.StringDType)
+indexes                 = np.array([[f"{x}"] for x in range(20)])
+exp_indexes             = indexes
+text_id                 = [[0], [0], [0], [0],
+                           [1], [1], [1], [1],
+                           [2], [2], [2], [2],
+                           [3], [3], [3], [3],
+                           [4], [4], [4], [4]]
 
-answers = np.column_stack([correct_answers, incorrect_column_1, incorrect_column_2, incorrect_column_3])
+text_id                 = np.array(text_id, dtype=np.dtypes.StringDType)
+questions               = np.array(questions, dtype=np.dtypes.StringDType)
+correct_answers         = np.array(correct_answers, dtype=np.dtypes.StringDType)
+incorrect_column_1      = np.array(incorrect_column_1, dtype=np.dtypes.StringDType)
+incorrect_column_2      = np.array(incorrect_column_2, dtype=np.dtypes.StringDType)
+incorrect_column_3      = np.array(incorrect_column_3, dtype=np.dtypes.StringDType)
+
+answers                 = np.column_stack([correct_answers, incorrect_column_1, incorrect_column_2, incorrect_column_3])
 
 for idx in range(20):
     rng.shuffle(answers[idx], axis=0)
@@ -306,58 +340,56 @@ ai_correctness_first_half = ai_correctness
 rng.shuffle(ai_correctness, axis=0)
 ai_correctness_second_half = ai_correctness
 
-test_full = np.column_stack([text_id, indexes, questions, answers, correct_answers, difficulty])
+test_full               = np.column_stack([text_id, indexes, questions, answers, correct_answers, difficulty])
 
-test_first_half, test_second_half = test_full[0::2], test_full[1::2]
+test_first_half         = test_full[0::2]
+test_second_half        = test_full[1::2]
 
-test_first_half = np.column_stack([test_first_half, ai_correctness_first_half])
-test_second_half = np.column_stack([test_second_half, ai_correctness_second_half])
+test_first_half         = np.column_stack([test_first_half, ai_correctness_first_half])
+test_second_half        = np.column_stack([test_second_half, ai_correctness_second_half])
+
 rng.shuffle(test_first_half, axis=0)
 rng.shuffle(test_second_half, axis=0)
 
-test_full = np.vstack([test_first_half, test_second_half])
+test_full               = np.vstack([test_first_half, test_second_half])
 
-test_full = np.column_stack([test_full, exp_indexes])
+test_full               = np.column_stack([test_full, exp_indexes])
 
 ### Design matrix
-design_matrix = test_full
+design_matrix           = test_full
 
-trialsDF = pd.DataFrame.from_records(design_matrix)
-trialsDF.columns = ["text_id", "indexes", "test_question", "test_answer_A", "test_answer_B", "test_answer_C",
-                    "test_answer_D", "test_correct_answer", "test_difficulty", "ai_accuracy", "exp_indexes"]
+trialsDF                = pd.DataFrame.from_records(design_matrix)
+trialsDF.columns        = ["text_id", "indexes", "test_question", "test_answer_A", "test_answer_B", "test_answer_C",
+                           "test_answer_D", "test_correct_answer", "test_difficulty", "ai_accuracy", "exp_indexes"]
 
-trial_list = pd.DataFrame.to_dict(trialsDF, orient="records")
+trial_list              = pd.DataFrame.to_dict(trialsDF, orient="records")
 
-trials = data.TrialHandler(trial_list, nReps=1, method='sequential')
+trials                  = data.TrialHandler(trial_list, nReps=1, method='sequential')
 
 ## Start of the experiment
-
-
-total_time = core.Clock()
-start_time = time.strftime("%H:%M:%S", time.localtime())
+total_time              = core.Clock()
+start_time              = time.strftime("%H:%M:%S", time.localtime())
 
 # Introduction
-stim_text_info.text = (
-        f"Hello and welcome to this experiment! Please read all instructions carefully. In this experiment, "
-        f"you will study a few texts, complete a questionnaire, and then take part in an exam. You will get 20 "
-        f"minutes to study.\n\n"
-        + "Press the space bar to receive the next part of the instructions")
+stim_text_info.text     = (f"Hello and welcome to this experiment! Please read all instructions carefully. In this "
+                           f"experiment, you will study a few texts, complete a questionnaire, and then take part in "
+                           f"an exam. You will get 20 minutes to study.\n\nPress the space bar to receive the next "
+                           f"part of the instructions")
+
 stim_text_info.draw()
 win.flip()
-key_press = event.waitKeys(keyList=list_allowed_keys)
-if key_press[0] == 'escape':
+if event.waitKeys(keyList=list_allowed_keys)[0] == 'escape':
     win.close()
     core.quit()
 
-stim_text_info.text = (
-        f"During the exam, you will have the opportunity to use generative artificial intelligence (AI). For each "
-        f"question, you can choose to solve the question with or without AI. While using AI could help you solve "
-        f"the questions, please be aware that the AI can make mistakes. \n\n"
-        + str_continue)
+stim_text_info.text     = (f"During the exam, you will have the opportunity to use generative artificial intelligence "
+                           f"(AI). For each question, you can choose to solve the question with or without AI. While "
+                           f"using AI could help you solve the questions, please be aware that the AI can make "
+                           f"mistakes. \n\n") + str_continue
+
 stim_text_info.draw()
 win.flip()
-key_press = event.waitKeys(keyList=list_allowed_keys)
-if key_press[0] == 'escape':
+if event.waitKeys(keyList=list_allowed_keys)[0] == 'escape':
     win.close()
     core.quit()
 
@@ -367,8 +399,7 @@ stim_text_info.text = (f"If anything is unclear at this time or if you have ques
                        + str_continue)
 stim_text_info.draw()
 win.flip()
-key_press = event.waitKeys(keyList=list_allowed_keys)
-if key_press[0] == 'escape':
+if event.waitKeys(keyList=list_allowed_keys)[0] == 'escape':
     win.close()
     core.quit()
 
@@ -382,8 +413,7 @@ stim_text_info.text = (f"In this part of the experiment, "
                     "starts. You will be alerted when the timer runs out. \n\nPress the space bar to start the timer")
 stim_text_info.draw()
 win.flip()
-key_press = event.waitKeys(keyList=list_allowed_keys)
-if key_press[0] == 'escape':
+if event.waitKeys(keyList=list_allowed_keys)[0] == 'escape':
     win.close()
     core.quit()
 
@@ -421,8 +451,7 @@ stim_text_info.text = (
     "To end your break, press the space bar.")
 stim_text_info.draw()
 win.flip()
-key_press = event.waitKeys(keyList=list_allowed_keys)
-if key_press[0] == 'escape':
+if event.waitKeys(keyList=list_allowed_keys)[0] == 'escape':
     win.close()
     core.quit()
 
@@ -434,8 +463,7 @@ stim_text_info.text = ("In the next part of the experiment you will complete a s
 
 stim_text_info.draw()
 win.flip()
-key_press = event.waitKeys(keyList=list_allowed_keys)
-if key_press[0] == 'escape':
+if event.waitKeys(keyList=list_allowed_keys)[0] == 'escape':
     win.close()
     core.quit()
 
@@ -467,8 +495,7 @@ stim_text_info.text = ("You can now take a short break before moving on to the n
                     "To end your break, press the space bar.")
 stim_text_info.draw()
 win.flip()
-key_press = event.waitKeys(keyList=list_allowed_keys)
-if key_press[0] == 'escape':
+if event.waitKeys(keyList=list_allowed_keys)[0] == 'escape':
     win.close()
     core.quit()
 
@@ -480,8 +507,7 @@ stim_text_info.text = (
         + str_continue)
 stim_text_info.draw()
 win.flip()
-key_press = event.waitKeys(keyList=list_allowed_keys)
-if key_press[0] == 'escape':
+if event.waitKeys(keyList=list_allowed_keys)[0] == 'escape':
     win.close()
     core.quit()
 
@@ -508,33 +534,32 @@ for trial in trials:
     else:
         test_half = "second_half"
     if test_half == "second_half" and counter == 0:
-        test_halfway_break.text = (f"This is the halfway point of the test. \nSo far, your score is "
+        stim_text_info.text = (f"This is the halfway point of the test. \nSo far, your score is "
                                    f"{test_score}/{int(trial['exp_indexes'])}. \nYou used GAI {total_ai_use} times. "
                                    f"\n\n") + str_continue
-        test_halfway_break.draw()
+        stim_text_info.draw()
         win.flip()
-        key_press = event.waitKeys(keyList=list_allowed_keys)
-        if key_press[0] == 'escape':
+        if event.waitKeys(keyList=list_allowed_keys)[0] == 'escape':
             win.close()
             core.quit()
         experiment_handler.addData("break_screen", "yes")
         counter += 1
 
     # Show test question, then ask if they want to use AI
-    test_question.text = (f"The next question should be '{trial['test_difficulty']}' to solve. It contains "
+    stim_text_ai_prompt.text = (f"The next question should be '{trial['test_difficulty']}' to solve. It contains "
                           f"{2 if trial['test_difficulty'] == 'easy' else 4} answer options.\n\n "
                           f"Do you want to use AI to solve this question?")
-    ai_slider.reset()
+    stim_slider_ai_prompt.reset()
     my_clock.reset()
-    while not ai_slider.rating:  # this loop shows the slider until a response has been selected
-        test_question.draw()
-        ai_slider.draw()
+    while not stim_slider_ai_prompt.rating:  # this loop shows the slider until a response has been selected
+        stim_text_ai_prompt.draw()
+        stim_slider_ai_prompt.draw()
         win.flip()
     ai_use_rt = round(my_clock.getTime(), 3)  # round to 1 millisecond
 
-    ai_use = 1 if ai_slider.rating == 'Yes' else 0
+    ai_use = 1 if stim_slider_ai_prompt.rating == 'Yes' else 0
 
-    test_question.text = trial['test_question']
+    stim_text_ai_prompt.text = trial['test_question']
 
     if trial["test_difficulty"] == "easy":
         answers = [trial["test_answer_A"], trial["test_answer_B"], trial["test_answer_C"], trial["test_answer_D"]]
@@ -552,14 +577,14 @@ for trial in trials:
         correct_answer_easy = trial['test_correct_answer']
         incorrect_answer_easy = answers[0] if answers[0] != correct_answer_easy else answers[1]
 
-        yes_ai_use.text = (f"AI says the correct answer is: "
+        stim_text_ai_shown.text = (f"AI says the correct answer is: "
                            f"{correct_answer_easy if trial['ai_accuracy'] == 'correct' else incorrect_answer_easy}")
         my_clock.reset()
         while not test_slider.rating:  # this loop shows the slider until a response has been selected
-            test_question.draw()
+            stim_text_ai_prompt.draw()
             test_slider.draw()
             if ai_use:
-                yes_ai_use.draw()
+                stim_text_ai_shown.draw()
             win.flip()
         reaction_time = round(my_clock.getTime(), 3)  # round to 1 millisecond
 
@@ -594,32 +619,32 @@ for trial in trials:
                                     ticks=[1, 2, 3, 4], units="norm", font=str_font, labelHeight=0.085, labelWrapWidth=0.45,
                                     size=(1.5, 0.15))
         if trial["ai_accuracy"] == "correct":
-            yes_ai_use.text = f"AI says the correct answer is: either {options[numbers[0]]} or {options[numbers[1]]}"
+            stim_text_ai_shown.text = f"AI says the correct answer is: either {options[numbers[0]]} or {options[numbers[1]]}"
         else:
-            yes_ai_use.text = (f"AI says the correct answer is: either {options[numbers_incorrect[0]]} or"
+            stim_text_ai_shown.text = (f"AI says the correct answer is: either {options[numbers_incorrect[0]]} or"
                                f" {options[numbers_incorrect[1]]}")
 
         my_clock.reset()
         while not test_slider.rating:  # this loop shows the slider until a response has been selected
-            test_label_A.draw()
-            test_label_B.draw()
-            test_label_C.draw()
-            test_label_D.draw()
-            test_question.draw()
+            stim_text_label_a.draw()
+            stim_text_label_b.draw()
+            stim_text_label_c.draw()
+            stim_text_label_d.draw()
+            stim_text_ai_prompt.draw()
             test_slider.draw()
             if ai_use:
-                yes_ai_use.draw()
+                stim_text_ai_shown.draw()
             win.flip()
-        reaction_time = round(my_clock.getTime(), 3)  # round to 1 millisecond
+        reaction_time   = round(my_clock.getTime(), 3)  # round to 1 millisecond
 
-        score = 1 if test_slider.rating == trial["test_correct_answer"] else 0
-        correct_answer = options[answers.index(trial["test_correct_answer"])]
-        chosen_answer = options[answers.index(test_slider.rating)]
+        score           = 1 if test_slider.rating == trial["test_correct_answer"] else 0
+        correct_answer  = options[answers.index(trial["test_correct_answer"])]
+        chosen_answer   = options[answers.index(test_slider.rating)]
 
-    test_score += score
-    total_ai_use += ai_use
-    total_answer_rt += reaction_time
-    total_ai_use_rt += ai_use_rt
+    test_score         += score
+    total_ai_use       += ai_use
+    total_answer_rt    += reaction_time
+    total_ai_use_rt    += ai_use_rt
 
     experiment_handler.addData("text_index", trial["text_id"])
     experiment_handler.addData("test_half", test_half)
@@ -672,18 +697,20 @@ for trial in trials:
         break
     experiment_handler.nextEntry()
 
-total_time = round(total_time.getTime(), 3)  # round to 1 millisecond
+total_time              = round(total_time.getTime(), 3)  # round to 1 millisecond
+
 experiment_handler.addData("date", time.strftime("%Y_%m_%d", time.localtime()))
 experiment_handler.addData("start_time", start_time)
 experiment_handler.addData("end_time", time.strftime("%H:%M:%S", time.localtime()))
 experiment_handler.addData("total_time_s", total_time)
 
-stim_text_info.text = ("This is the end of the experiment.\n\n"
-                    f"Your final score is {test_score}/20. \nYou used GAI {total_ai_use} times. \n\n"
-                    "Signal to the experimenter that you have completed the test.\n\n"
-                    "Thank you very much for your participation!\n\n")
+stim_text_info.text     = ("This is the end of the experiment.\n\n"
+                           f"Your final score is {test_score}/20. \nYou used GAI {total_ai_use} times. \n\n"
+                           "Signal to the experimenter that you have completed the test.\n\n"
+                           "Thank you very much for your participation!\n\n")
+
 stim_text_info.draw()
 win.flip()
-key_press = event.waitKeys(keyList=list_allowed_keys)
+event.waitKeys(keyList=list_allowed_keys)
 win.close()
 core.quit()
