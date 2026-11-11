@@ -537,45 +537,6 @@ answer_A, answer_B, answer_C, answer_D = "", "", "", ""
 show_correct_idx = 0
 number = 0
 
-#
-# test_question.text = (f"The next question should be 'hard' to solve. It contains 4 answer options.\n\n Do you want to use AI to solve "
-#                           f"this question?")
-# ai_slider.reset()
-# my_clock.reset()
-# while not ai_slider.rating:  # this loop shows the slider until a response has been selected
-#     test_question.draw()
-#     ai_slider.draw()
-#     win.flip()
-# ai_use_rt = round(my_clock.getTime(), 3)  # round to 1 millisecond
-#
-# ai_use = 1 if ai_slider.rating == 'Yes' else 0
-#
-# test_question.text = 'test_question'
-#
-# if trial["test_difficulty"] == "easy":
-#     answers = [trial["test_answer_A"], trial["test_answer_B"], trial["test_answer_C"], trial["test_answer_D"]]
-#     answer_A, answer_B, answer_C, answer_D = "", "", "", ""
-#     while not answer_A:
-#         answer_A = answers.pop(0)
-#     while not answer_B:
-#         answer_B = answers.pop(0)
-#     test_slider = visual.Slider(win=win, pos=(0, 0), style="radio",
-#                                     labels=[answer_A, answer_B],
-#                                     ticks=[1, 2], units="norm", font=font, labelHeight=0.085, labelWrapWidth=0.45,
-#                                     size=(0.52, 0.15))
-#
-#     answers = [answer_A, answer_B]
-#
-#     yes_ai_use.text = f"AI says the correct answer is: {trial['test_correct_answer']}"
-#     my_clock.reset()
-#     while not test_slider.rating:  # this loop shows the slider until a response has been selected
-#         test_question.draw()
-#         test_slider.draw()
-#         if ai_use:
-#             yes_ai_use.draw()
-#         win.flip()
-
-
 # Give feedback after 10 questions of the test
 #show score gathered from the first 10 questions
 
