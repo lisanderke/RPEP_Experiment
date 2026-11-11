@@ -82,7 +82,8 @@ stim_text_study_timer   = visual.TextStim(win,
 
 stim_text_survey_prompt = visual.TextStim(win,
                                           font=str_font,
-                                          pos=(0, -0.15)
+                                          pos=(0, -0.15),
+                                          text="Do you agree with this statement?"
                                           )
 
 stim_text_survey_item   = visual.TextStim(win,
@@ -90,15 +91,7 @@ stim_text_survey_item   = visual.TextStim(win,
                                           pos=(0, 0.25)
                                           )
 
-stim_slider_ctar        = visual.Slider(win,
-                                        font=str_font,
-                                        pos=(0, -0.35),
-                                        style="radio",
-                                        labels=["Not at all", "Somewhat", "Quite", "Very"],
-                                        ticks=[1, 2, 3, 4]
-                                        )
-
-stim_slider_gaius       = visual.Slider(win,
+stim_slider_survey      = visual.Slider(win,
                                         font=str_font,
                                         pos=(0, -0.35),
                                         style="radio",
@@ -107,49 +100,38 @@ stim_slider_gaius       = visual.Slider(win,
                                         ticks=[1, 2, 3, 4, 5]
                                         )
 
-dict_ctar_resp_options  = {"Not at all": 0, "Somewhat": 1, "Quite": 2, "Very": 3}
+dict_survey_items       = {"ctar_01": "I lose sleep over worrying about exams.",
+                           "ctar_02": "While taking an important exam, I find myself wondering whether the other "
+                                      "students are doing better than I am.",
+                           "ctar_03": "During tests, I find myself thinking of the consequences of failing.",
+                           "ctar_04": "At the beginning of a test, I am so nervous that I often can't think straight.",
+                           "ctar_05": "My mind goes blank when I am pressured for an answer on a test.",
+                           "ctar_06": "During a course exam, I get so nervous that I forget facts I really know.",
+                           "ctar_07": "After taking a test, I feel I should have done better than I actually did.",
+                           "ctar_08": "I am a poor test taker in the sense that my performance on a test does not "
+                                      "show how much I really know about a topic.",
+                           "ctar_09": "When I first get my copy of a test, it takes me a while to calm down to the "
+                                      "point where I can begin to think straight.",
+                           "ctar_10": "When I take a test, my nervousness causes me to make careless errors.",
 
-dict_gaius_resp_options = {"Strongly  disagree": -2, "Disagree ": -1, "Neutral": 0, "Agree": 1, "Strongly  agree": 2}
+                           "ai_use_01": "I use GenAI tools (e.g. ChatGPT) because it provides accurate and reliable "
+                                        "information.",
+                           "ai_use_02": "I use GenAI tools in writing tasks.",
+                           "ai_use_03": "I use GenAI tools in my verbal contribution in the class.",
+                           "ai_use_04": "I use GenAI tools while studying.",
+                           "ai_use_05": "I use GenAI tools because it saves me time.",
 
-list_ctar_items         = ["I lose sleep over worrying about examinations.",
-                           "While taking an important examination, I find myself wondering whether the other students "
-                           "are doing better than I am.",
-                           "I tend to freeze up on things like intelligence tests and final exams.",
-                           "During tests, I find myself thinking of the consequences of failing.",
-                           "At the beginning of a test, I am so nervous that I often can't think straight.",
-                           "My mind goes blank when I am pressured for an answer on a test.",
-                           "During tests, the thought frequently occurs to me that I may not be too bright.",
-                           "During a course examination, I get so nervous that I forget facts I really know.",
-                           "After taking a test, I feel I should have done better than I actually did.",
-                           "During tests, I have the feeling that I am not doing well.",
-                           "When I take a test that is difficult, I feel defeated before I even start.",
-                           "I am a poor test taker in the sense that my performance on a test does not show how much I "
-                           "really know about a topic.",
-                           "I am not good at taking tests.",
-                           "When I first get my copy of a test, it takes me a while to calm down to the point where I "
-                           "can begin to think straight.",
-                           "When I take a test, my nervousness causes me to make careless errors."]
+                           "dishonest_ai_01": "I submit a full paper generated by GenAI tools as my own work.",
+                           "dishonest_ai_02": "I paraphrase and edit a work generated by GenAI tools and submit it as "
+                                              "my own work.",
+                           "dishonest_ai_03": "I cite information generated by GenAI tools in my work.",
+                           "dishonest_ai_04": "I use GenAI tools in class activities without the instructor’s "
+                                              "permission.",
+                           "dishonest_ai_05": "I use GenAI tools for class activities without acknowledging the help "
+                                              "of the GenAI tools.",
+                           }
 
-list_gaius_items        = ["GenAI tools (e.g. ChatGPT) should be integrated into the classroom.",
-                           "GenAI tools (e.g. ChatGPT) can help me save time.",
-                           "GenAI tools (e.g. ChatGPT) can provide me with new ideas that I may not have thought of myself.",
-                           "GenAI tools (e.g. ChatGPT) can provide me with feed-back on my assignments.",
-                           "I use GenAI tools (e.g. ChatGPT) because it can provide academic support services (e.g. answer my questions, summarise readings, etc.)",
-    # "Students must learn how to use GenAI tools well for their careers.",
-    # "GenAI tools (e.g. ChatGPT) can improve my digital competence.",
-    # "I use GenAI tools (e.g. ChatGPT) because it is available and accessible 24/7.",
-    # "I use GenAI tools (e.g. ChatGPT) for my assignments because it is anonymous.",
-    # "I use GenAI tools because it provides accurate and reliable information.",
-    # "I use GenAI tools (e.g. ChatGPT) for my assignments to improve my English grammar and spelling.",
-    # "I use GenAI tools (e.g. ChatGPT) in writing tasks.",
-    # "I use GenAI tools (e.g. ChatGPT) in my verbal contribution in the class.",
-    # "I submit a full paper generated by GenAI tools (e.g. ChatGPT) as my own work.",
-    # "I paraphrase and edit a work generated by GenAI tools (e.g. ChatGPT) and submit it as my own work.",
-    # "I cite information generated by GenAI tools (e.g. ChatGPT) in my work.",
-    # "GenAI tools (e.g. ChatGPT) encourage and facilitate academic misconduct.",
-    # "I use GenAI tools (e.g. ChatGPT) in class activities without the instructor’s permission.",
-    # "I use GenAI tools (e.g. ChatGPT) for class activities without acknowledging the help of the GenAI tools.",
-                           ]
+dict_survey_options     = {"Strongly  disagree": -2, "Disagree ": -1, "Neutral": 0, "Agree": 1, "Strongly  agree": 2}
 
 # Test phase setup
 
@@ -348,12 +330,13 @@ trial_list = pd.DataFrame.to_dict(trialsDF, orient="records")
 
 trials = data.TrialHandler(trial_list, nReps=1, method='sequential')
 
-### Start of the experiment
-# Introduction
+## Start of the experiment
+
 
 total_time = core.Clock()
 start_time = time.strftime("%H:%M:%S", time.localtime())
 
+# Introduction
 stim_text_info.text = (
         f"Hello and welcome to this experiment! Please read all instructions carefully. In this experiment, "
         f"you will study a few texts, complete a questionnaire, and then take part in an exam. You will get 20 "
@@ -404,12 +387,13 @@ if key_press[0] == 'escape':
     win.close()
     core.quit()
 
+# initialize countdown timer
 minutes = 0
 seconds = 3
 duration = minutes * 60 + seconds
 remaining_time = duration
-flashes = 3
 
+# show and update countdown timer
 for _ in range(duration):
     stim_text_study_timer.text = (f"{remaining_time // 60 if remaining_time // 60 >= 10 else f'0{remaining_time // 60}'}:"
                             f"{remaining_time % 60 if remaining_time % 60 >= 10 else f'0{remaining_time % 60}'}")
@@ -421,6 +405,8 @@ for _ in range(duration):
         core.quit()
     remaining_time -= 1
 
+# screen flashes red to indicate the study phase has ended
+flashes = 3
 for _ in range(flashes):
     win.color = (1, -1, -1)
     win.flip()
@@ -440,10 +426,11 @@ if key_press[0] == 'escape':
     win.close()
     core.quit()
 
-stim_text_info.text = ("In the next part of the experiment you will complete some short questionnaires.\n"
-                                                  "You will first be shown a brief explanation of the questionnaire."
-                                                  "\n\n"
-                       + str_continue)
+# Survey start
+stim_text_info.text = ("In the next part of the experiment you will complete a short survey.\nFor every statement "
+                       "you see, please indicate how much you agree with that statement.\nBe careful! Once you "
+                       "select a response, you cannot go back and change it.\n\nPress the space bar to start the "
+                       "questionnaire")
 
 stim_text_info.draw()
 win.flip()
@@ -452,57 +439,28 @@ if key_press[0] == 'escape':
     win.close()
     core.quit()
 
-stim_text_info.text = ("For every statement you see, please indicate how "
-                                              "typical it is for you."
-                                              "To choose an option, you must click on the corresponding option to "
-                                              "register your answer. Be careful, once you select an answer you cannot "
-                                              "go back and change it. \n\n"
-                       + "Press the space bar to start the questionnaire")
-
-stim_text_info.draw()
-win.flip()
-key_press = event.waitKeys(keyList=list_allowed_keys)
-if key_press[0] == 'escape':
-    win.close()
-    core.quit()
-
-stim_text_survey_prompt.text = "How typical is this for you?"
-
-idx = 0
-total_score = 0
-for item in list_ctar_items:
+for survey_idx in dict_survey_items: # this wil loop over all survey items
+    item = dict_survey_items[survey_idx]
     stim_text_survey_item.text = item
-    idx += 1
-    stim_slider_ctar.reset()
+    stim_slider_survey.reset()
     my_clock.reset()
-    while not stim_slider_ctar.rating:  # this loop shows the slider until a response has been selected
+
+    while not stim_slider_survey.rating:  # this loop shows the slider until a response has been selected
         stim_text_survey_item.draw()
         stim_text_survey_prompt.draw()
-        stim_slider_ctar.draw()
+        stim_slider_survey.draw()
         win.flip()
+
     reaction_time = round(my_clock.getTime(), 3)  # round to 1 millisecond
 
-    item_score = dict_ctar_resp_options[stim_slider_ctar.rating]
-    total_score += item_score
-    experiment_handler.addData('CTAR_idx', idx)
-    experiment_handler.addData('CTAR_item', item)
-    experiment_handler.addData('CTAR_response', stim_slider_ctar.rating)
-    experiment_handler.addData('CTAR_response_score', item_score)
-    experiment_handler.addData('CTAR_total', total_score)
-    experiment_handler.addData('CTAR_rt_s', reaction_time)
+    item_score = dict_survey_options[stim_slider_survey.rating]
+
+    experiment_handler.addData('survey_idx', survey_idx)
+    experiment_handler.addData('survey_item', item)
+    experiment_handler.addData('survey_resp', stim_slider_survey.rating)
+    experiment_handler.addData('survey_resp_score', item_score)
+    experiment_handler.addData('survey_rt', reaction_time)
     experiment_handler.nextEntry()
-
-
-stim_text_survey_prompt.text = "Do you agree with this statement?"
-
-for item in list_gaius_items:
-    stim_text_survey_item.text = item
-
-    while not stim_slider_gaius.rating:
-        stim_text_survey_item.draw()
-        stim_text_survey_prompt.draw()
-        stim_slider_gaius.draw()
-        win.flip()
 
 
 stim_text_info.text = ("You can now take a short break before moving on to the next part of the experiment.\n\n"
