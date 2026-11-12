@@ -74,8 +74,8 @@ stim_text_info          = visual.TextStim(win,
                                           font=str_font,
                                           )
 
-stim_text_space_bar     = visual.TextStim(win,
-                                          text="Press the space bar to continue",
+stim_text_space         = visual.TextStim(win,
+                                          text=str_continue,
                                           font=str_font,
                                           pos=(0, -0.75),
                                           )
@@ -379,10 +379,11 @@ start_time              = time.strftime("%H:%M:%S", time.localtime())
 # Introduction
 stim_text_info.text     = (f"Hello and welcome to this experiment! Please read all instructions carefully. In this "
                            f"experiment, you will study a few texts, complete a questionnaire, and then take part in "
-                           f"an exam. You will get 20 minutes to study.\n\nPress the space bar to receive the next "
-                           f"part of the instructions")
+                           f"an exam. You will get 20 minutes to study.")
+stim_text_space.text    = "Press the space bar to receive the next part of the instructions"
 
 stim_text_info.draw()
+stim_text_space.draw()
 win.flip()
 if event.waitKeys(keyList=list_allowed_keys)[0] == 'escape':
     win.close()
@@ -392,9 +393,10 @@ stim_text_info.text     = (f"During the exam, you will have the opportunity to u
                            f"(AI). For each question, you can choose to solve the question with or without AI. While "
                            f"using AI could help you solve the questions, please be aware that the AI can make "
                            f"mistakes.")
+stim_text_space.text    = str_continue
 
 stim_text_info.draw()
-stim_text_space_bar.draw()
+stim_text_space.draw()
 win.flip()
 if event.waitKeys(keyList=list_allowed_keys)[0] == 'escape':
     win.close()
@@ -405,7 +407,7 @@ stim_text_info.text     = (f"If anything is unclear at this time or if you have 
                            f"stop the experiment at any point, please let the researcher know.")
 
 stim_text_info.draw()
-stim_text_space_bar.draw()
+stim_text_space.draw()
 win.flip()
 if event.waitKeys(keyList=list_allowed_keys)[0] == 'escape':
     win.close()
@@ -417,9 +419,11 @@ stim_text_info.text     = (f"In this part of the experiment, you will study the 
                            f"screen a timer will start. You will get 20 minutes to study the texts. Afterwards, "
                            f"you are expected to complete a knowledge test (multiple choice exam) on the content of "
                            f"these texts. Please turn over the texts after the timer starts. You will be alerted when "
-                           f"the timer runs out. \n\nPress the space bar to start the timer")
+                           f"the timer runs out.")
+stim_text_space.text = "Press the space bar to start the timer"
 
 stim_text_info.draw()
+stim_text_space.draw()
 win.flip()
 if event.waitKeys(keyList=list_allowed_keys)[0] == 'escape':
     win.close()
@@ -454,9 +458,11 @@ for _ in range(flashes):
     core.wait(0.5)
 
 stim_text_info.text     = ("Please hand over your texts to the researcher. You can now take a short break before "
-                           "moving on to the next part of the experiment.\n\nTo end your break, press the space bar.")
+                           "moving on to the next part of the experiment.")
+stim_text_space.text    = "To end your break, press the space bar."
 
 stim_text_info.draw()
+stim_text_space.draw()
 win.flip()
 if event.waitKeys(keyList=list_allowed_keys)[0] == 'escape':
     win.close()
@@ -465,10 +471,11 @@ if event.waitKeys(keyList=list_allowed_keys)[0] == 'escape':
 # Survey start
 stim_text_info.text     = ("In the next part of the experiment you will complete a short survey.\nFor every statement "
                            "you see, please indicate how much you agree with that statement.\n\nBe careful! Once you "
-                           "select a response, you cannot go back and change it.\n\nPress the space bar to start the "
-                           "questionnaire")
+                           "select a response, you cannot go back and change it.\n\n")
+stim_text_space.text    = "Press the space bar to start the questionnaire"
 
 stim_text_info.draw()
+stim_text_space.draw()
 win.flip()
 if event.waitKeys(keyList=list_allowed_keys)[0] == 'escape':
     win.close()
@@ -498,9 +505,11 @@ for survey_idx in dict_survey_items: # this wil loop over all survey items
     experiment_handler.nextEntry()
 
 
-stim_text_info.text     = ("You can now take a short break before moving on to the next part of the experiment.\n\n"
-                           "To end your break, press the space bar.")
+stim_text_info.text     = "You can now take a short break before moving on to the next part of the experiment."
+stim_text_space.text    = "To end your break, press the space bar."
+
 stim_text_info.draw()
+stim_text_space.draw()
 win.flip()
 if event.waitKeys(keyList=list_allowed_keys)[0] == 'escape':
     win.close()
@@ -509,11 +518,11 @@ if event.waitKeys(keyList=list_allowed_keys)[0] == 'escape':
 stim_text_info.text = (
         f"You will now complete the multiple choice exam based on the texts you studied. There are 20 questions "
         f"in total. For each question, you will get the opportunity to use AI to help you solve the question. "
-        f"However, please be aware that the AI can make mistakes.\n"
-        f"Before the exam starts, an example question will be shown so you can try asking the AI for help.")
+        f"However, please be aware that the AI can make mistakes.")
+stim_text_space.text    = "Press the space bar to start the exam"
 
 stim_text_info.draw()
-stim_text_space_bar.draw()
+stim_text_space.draw()
 win.flip()
 if event.waitKeys(keyList=list_allowed_keys)[0] == 'escape':
     win.close()
@@ -544,9 +553,10 @@ for trial in trials:
     if test_half == "second_half" and counter == 0:
         stim_text_info.text = (f"This is the halfway point of the test. \nSo far, your score is "
                                    f"{test_score}/{int(trial['exp_indexes'])}. \nYou used GAI {total_ai_use} times.")
+        stim_text_space.text = str_continue
 
         stim_text_info.draw()
-        stim_text_space_bar.draw()
+        stim_text_space.draw()
         win.flip()
         if event.waitKeys(keyList=list_allowed_keys)[0] == 'escape':
             win.close()
