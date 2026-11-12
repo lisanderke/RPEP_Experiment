@@ -437,8 +437,10 @@ remaining_time          = duration
 
 # show and update countdown timer
 for _ in range(duration):
-    stim_text_study_timer.text = (f"{remaining_time // 60 if remaining_time // 60 >= 10 else f'0{remaining_time // 60}'}:"
-                            f"{remaining_time % 60 if remaining_time % 60 >= 10 else f'0{remaining_time % 60}'}")
+    stim_text_study_timer.text = (
+                            f"{remaining_time // 60 if remaining_time // 60 >= 10 else f'0{remaining_time // 60}'}:"
+                            f"{remaining_time % 60 if remaining_time % 60 >= 10 else f'0{remaining_time % 60}'}"
+                                 )
     stim_text_study_timer.draw()
     win.flip()
     key_press = event.waitKeys(keyList="escape", maxWait=1)
@@ -644,7 +646,8 @@ for trial in trials:
                                         size=(1.5, 0.15)
                                         )
         if trial["ai_accuracy"] == "correct":
-            stim_text_ai_shown.text = f"AI says the correct answer is: either {options[numbers[0]]} or {options[numbers[1]]}"
+            stim_text_ai_shown.text = (f"AI says the correct answer is: "
+                                       f"either {options[numbers[0]]} or {options[numbers[1]]}")
         else:
             stim_text_ai_shown.text = (f"AI says the correct answer is: either {options[numbers_incorrect[0]]} or"
                                f" {options[numbers_incorrect[1]]}")
@@ -707,7 +710,8 @@ for trial in trials:
 
         else:
             if trial["ai_accuracy"] == "correct":
-                experiment_handler.addData("correct_shown_ai", options[0 if trial['test_correct_answer'] == answer_A else 1])
+                experiment_handler.addData("correct_shown_ai",
+                                           options[0 if trial['test_correct_answer'] == answer_A else 1])
                 experiment_handler.addData("incorrect_shown_ai", "None")
             else:
                 experiment_handler.addData("correct_shown_ai", "None")
