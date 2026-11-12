@@ -569,7 +569,7 @@ for trial in trials:
             answer_A = answers.pop(0)
         while not answer_B:
             answer_B = answers.pop(0)
-        test_slider = visual.Slider(win=win, pos=(0, 0), style="radio",
+        test_slider = visual.Slider(win, style="radio",
                                     labels=[answer_A, answer_B],
                                     ticks=[1, 2], units="norm", font=str_font, labelHeight=0.085, labelWrapWidth=0.45,
                                     size=(0.52, 0.15))
