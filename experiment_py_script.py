@@ -593,10 +593,10 @@ for trial in trials:
             answer_A = answers.pop(0)
         while not answer_B:
             answer_B = answers.pop(0)
-        test_slider = visual.Slider(win, style="radio",
-                                    labels=[answer_A, answer_B],
-                                    ticks=[1, 2], units="norm", font=str_font, labelHeight=0.085, labelWrapWidth=0.45,
-                                    size=(0.52, 0.15))
+        stim_slider_test = visual.Slider(win, style="radio",
+                                         labels=[answer_A, answer_B],
+                                         ticks=[1, 2], units="norm", font=str_font, labelHeight=0.085, labelWrapWidth=0.45,
+                                         size=(0.52, 0.15))
 
         answers = [answer_A, answer_B]
         correct_answer_easy = trial['test_correct_answer']
@@ -605,17 +605,17 @@ for trial in trials:
         stim_text_ai_shown.text = (f"AI says the correct answer is: "
                            f"{correct_answer_easy if trial['ai_accuracy'] == 'correct' else incorrect_answer_easy}")
         my_clock.reset()
-        while not test_slider.rating:  # this loop shows the slider until a response has been selected
+        while not stim_slider_test.rating:  # this loop shows the slider until a response has been selected
             stim_text_test_prompt.draw()
-            test_slider.draw()
+            stim_slider_test.draw()
             if ai_use:
                 stim_text_ai_shown.draw()
             win.flip()
         reaction_time = round(my_clock.getTime(), 3)  # round to 1 millisecond
 
-        score = 1 if test_slider.rating == trial["test_correct_answer"] else 0
+        score = 1 if stim_slider_test.rating == trial["test_correct_answer"] else 0
         correct_answer = options[answers.index(trial["test_correct_answer"])]
-        chosen_answer = options[answers.index(test_slider.rating)]
+        chosen_answer = options[answers.index(stim_slider_test.rating)]
 
     else:
         answers = [trial["test_answer_A"], trial["test_answer_B"], trial["test_answer_C"], trial["test_answer_D"]]
@@ -639,15 +639,15 @@ for trial in trials:
         numbers.sort()
         numbers_incorrect.sort()
 
-        test_slider     = visual.Slider(win,
-                                        style="radio",
-                                        labels=[answer_A, answer_B, answer_C, answer_D],
-                                        ticks=[1, 2, 3, 4],
-                                        font=str_font,
-                                        labelHeight=0.085,
-                                        labelWrapWidth=0.45,
-                                        size=(1.5, 0.15)
-                                        )
+        stim_slider_test     = visual.Slider(win,
+                                             style="radio",
+                                             labels=[answer_A, answer_B, answer_C, answer_D],
+                                             ticks=[1, 2, 3, 4],
+                                             font=str_font,
+                                             labelHeight=0.085,
+                                             labelWrapWidth=0.45,
+                                             size=(1.5, 0.15)
+                                             )
         if trial["ai_accuracy"] == "correct":
             stim_text_ai_shown.text = (f"AI says the correct answer is: "
                                        f"either {options[numbers[0]]} or {options[numbers[1]]}")
@@ -656,21 +656,21 @@ for trial in trials:
                                f" {options[numbers_incorrect[1]]}")
 
         my_clock.reset()
-        while not test_slider.rating:  # this loop shows the slider until a response has been selected
+        while not stim_slider_test.rating:  # this loop shows the slider until a response has been selected
             stim_text_label_a.draw()
             stim_text_label_b.draw()
             stim_text_label_c.draw()
             stim_text_label_d.draw()
             stim_text_test_prompt.draw()
-            test_slider.draw()
+            stim_slider_test.draw()
             if ai_use:
                 stim_text_ai_shown.draw()
             win.flip()
         reaction_time   = round(my_clock.getTime(), 3)  # round to 1 millisecond
 
-        score           = 1 if test_slider.rating == trial["test_correct_answer"] else 0
+        score           = 1 if stim_slider_test.rating == trial["test_correct_answer"] else 0
         correct_answer  = options[answers.index(trial["test_correct_answer"])]
-        chosen_answer   = options[answers.index(test_slider.rating)]
+        chosen_answer   = options[answers.index(stim_slider_test.rating)]
 
     test_score         += score
     total_ai_use       += ai_use
@@ -692,7 +692,7 @@ for trial in trials:
     experiment_handler.addData('rt_answer', reaction_time)
     experiment_handler.addData("rt_total_answer", round(total_answer_rt, 3))
     experiment_handler.addData("correct_answer", trial["test_correct_answer"])
-    experiment_handler.addData("chosen_answer", test_slider.rating)
+    experiment_handler.addData("chosen_answer", stim_slider_test.rating)
     experiment_handler.addData("accuracy", score)
     experiment_handler.addData("total_score", test_score)
     experiment_handler.addData("ai_use", ai_use)
