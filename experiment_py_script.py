@@ -75,6 +75,12 @@ stim_text_info          = visual.TextStim(win,
                                           alignText="left"
                                           )
 
+stim_text_space_bar     = visual.TextStim(win,
+                                          text="Press the space bar to continue",
+                                          font=str_font,
+                                          pos=(0, -0.75),
+                                          )
+
 stim_text_study_timer   = visual.TextStim(win,
                                           font=str_font,
                                           height=0.4
