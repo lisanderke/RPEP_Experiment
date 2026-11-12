@@ -452,7 +452,7 @@ if event.waitKeys(keyList=list_allowed_keys)[0] == 'escape':
 
 # Survey start
 stim_text_info.text     = ("In the next part of the experiment you will complete a short survey.\nFor every statement "
-                           "you see, please indicate how much you agree with that statement.\nBe careful! Once you "
+                           "you see, please indicate how much you agree with that statement.\n\nBe careful! Once you "
                            "select a response, you cannot go back and change it.\n\nPress the space bar to start the "
                            "questionnaire")
 
