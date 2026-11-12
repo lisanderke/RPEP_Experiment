@@ -71,13 +71,18 @@ str_font                = "Arial"
 str_continue            = "Press the space bar to continue"
 
 stim_text_info          = visual.TextStim(win,
+                                          pos=(0, 0.65),
                                           font=str_font,
+                                          anchorVert="top",
+                                          wrapWidth=1.75,
+                                          alignText="left",
                                           )
 
 stim_text_space         = visual.TextStim(win,
                                           text=str_continue,
                                           font=str_font,
                                           pos=(0, -0.75),
+                                          wrapWidth=10,
                                           )
 
 stim_text_study_timer   = visual.TextStim(win,
@@ -218,8 +223,7 @@ list_test_questions     = [['What brain regions were primarily involved in decis
                             'outcomes?']]
 
 list_test_correct       = [['Prefrontal and parietal cortices'],
-                           ['People make different decisions depending on whether options are framed as gains or '
-                            'losses'],
+                           ['The framing of options (as gains or losses) influences decision-making'],
                            ['Choosing a sure gain required less cognitive effort than choosing a risky gain'],
                            ['Individuals seek to make good decisions while minimizing cognitive effort'],
                            ['How psychological changes occur through different treatments'],
@@ -377,23 +381,14 @@ total_time              = core.Clock()
 start_time              = time.strftime("%H:%M:%S", time.localtime())
 
 # Introduction
-stim_text_info.text     = (f"Hello and welcome to this experiment! Please read all instructions carefully. In this "
-                           f"experiment, you will study a few texts, complete a questionnaire, and then take part in "
-                           f"an exam. You will get 20 minutes to study.")
-stim_text_space.text    = "Press the space bar to receive the next part of the instructions"
-
-stim_text_info.draw()
-stim_text_space.draw()
-win.flip()
-if event.waitKeys(keyList=list_allowed_keys)[0] == 'escape':
-    win.close()
-    core.quit()
-
-stim_text_info.text     = (f"During the exam, you will have the opportunity to use generative artificial intelligence "
-                           f"(AI). For each question, you can choose to solve the question with or without AI. While "
-                           f"using AI could help you solve the questions, please be aware that the AI can make "
-                           f"mistakes.")
-stim_text_space.text    = str_continue
+stim_text_info.text     = ("Hello and welcome to this experiment!\n"
+                           "Please read all instructions carefully.\n\n"
+                           "The experiment contains the following parts:\n"
+                           "First you get 20 minutes to study some texts.\n"
+                           "Then you will complete a short survey about test taking and studying.\n"
+                           "Finally, you will take part in an exam on the texts you studied.\n"
+                           "During the exam, you can choose to solve questions with or without AI\n"
+                           "Please be aware that the AI can make mistakes.")
 
 stim_text_info.draw()
 stim_text_space.draw()
@@ -403,7 +398,7 @@ if event.waitKeys(keyList=list_allowed_keys)[0] == 'escape':
     core.quit()
 
 stim_text_info.text     = (f"If anything is unclear at this time or if you have questions at any point during the "
-                           f"experiment, raise your hand and the researcher will come to you. If you would like to "
+                           f"experiment, raise your hand and the researcher will come to you.\n\nIf you would like to "
                            f"stop the experiment at any point, please let the researcher know.")
 
 stim_text_info.draw()
