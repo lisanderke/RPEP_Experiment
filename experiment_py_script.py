@@ -72,7 +72,6 @@ str_continue            = "Press the space bar to continue"
 
 stim_text_info          = visual.TextStim(win,
                                           font=str_font,
-                                          alignText="left"
                                           )
 
 stim_text_space_bar     = visual.TextStim(win,
@@ -88,22 +87,23 @@ stim_text_study_timer   = visual.TextStim(win,
 
 stim_text_survey_prompt = visual.TextStim(win,
                                           font=str_font,
-                                          pos=(0, -0.15),
+                                          pos=(0, 0.25),
                                           text="Do you agree with this statement?"
                                           )
 
 stim_text_survey_item   = visual.TextStim(win,
                                           font=str_font,
-                                          pos=(0, 0.25)
+                                          pos=(0, 0.65)
                                           )
 
 stim_slider_survey      = visual.Slider(win,
                                         font=str_font,
-                                        pos=(0, -0.35),
                                         style="radio",
                                         labels=["Strongly  disagree", "Disagree", "Neutral", "Agree",
                                                 "Strongly  agree"],
-                                        ticks=[1, 2, 3, 4, 5]
+                                        ticks=[1, 2, 3, 4, 5],
+                                        labelHeight=0.085,
+                                        size=(1.25, 0.15)
                                         )
 
 dict_survey_items       = {"ctar_01": "I lose sleep over worrying about exams.",
@@ -114,10 +114,9 @@ dict_survey_items       = {"ctar_01": "I lose sleep over worrying about exams.",
                            "ctar_05": "My mind goes blank when I am pressured for an answer on a test.",
                            "ctar_06": "During a course exam, I get so nervous that I forget facts I really know.",
                            "ctar_07": "After taking a test, I feel I should have done better than I actually did.",
-                           "ctar_08": "I am a poor test taker in the sense that my performance on a test does not "
-                                      "show how much I really know about a topic.",
-                           "ctar_09": "When I first get my copy of a test, it takes me a while to calm down to the "
-                                      "point where I can begin to think straight.",
+                           "ctar_08": "My performance on a test does not show how much I really know about a topic.",
+                           "ctar_09": "At the start of a test, it takes me a while to calm down to the point where I "
+                                      "can begin to think straight.",
                            "ctar_10": "When I take a test, my nervousness causes me to make careless errors.",
 
                            "ai_use_01": "I use GenAI tools (e.g. ChatGPT) because it provides accurate and reliable "
@@ -143,6 +142,11 @@ dict_survey_options     = {"Strongly  disagree": -2, "Disagree": -1, "Neutral": 
 stim_text_ai_prompt     = visual.TextStim(win,
                                           pos=(0, 0.50),
                                           font=str_font)
+
+stim_text_test_prompt   = visual.TextStim(win,
+                                          pos=(0, 0.50),
+                                          font=str_font)
+
 
 stim_text_label_a       = visual.TextStim(win,
                                          pos=(-0.75, 0.15),
@@ -387,7 +391,7 @@ if event.waitKeys(keyList=list_allowed_keys)[0] == 'escape':
 stim_text_info.text     = (f"During the exam, you will have the opportunity to use generative artificial intelligence "
                            f"(AI). For each question, you can choose to solve the question with or without AI. While "
                            f"using AI could help you solve the questions, please be aware that the AI can make "
-                           f"mistakes. \n\n") + str_continue
+                           f"mistakes.")
 
 stim_text_info.draw()
 stim_text_space_bar.draw()
@@ -398,7 +402,7 @@ if event.waitKeys(keyList=list_allowed_keys)[0] == 'escape':
 
 stim_text_info.text     = (f"If anything is unclear at this time or if you have questions at any point during the "
                            f"experiment, raise your hand and the researcher will come to you. If you would like to "
-                           f"stop the experiment at any point, please let the researcher know.\n\n")+ str_continue
+                           f"stop the experiment at any point, please let the researcher know.")
 
 stim_text_info.draw()
 stim_text_space_bar.draw()
@@ -565,7 +569,7 @@ for trial in trials:
 
     ai_use = 1 if stim_slider_ai_prompt.rating == 'Yes' else 0
 
-    stim_text_ai_prompt.text = trial['test_question']
+    stim_text_test_prompt.text = trial['test_question']
 
     if trial["test_difficulty"] == "easy":
         answers = [trial["test_answer_A"], trial["test_answer_B"], trial["test_answer_C"], trial["test_answer_D"]]
@@ -587,7 +591,7 @@ for trial in trials:
                            f"{correct_answer_easy if trial['ai_accuracy'] == 'correct' else incorrect_answer_easy}")
         my_clock.reset()
         while not test_slider.rating:  # this loop shows the slider until a response has been selected
-            stim_text_ai_prompt.draw()
+            stim_text_test_prompt.draw()
             test_slider.draw()
             if ai_use:
                 stim_text_ai_shown.draw()
@@ -641,7 +645,7 @@ for trial in trials:
             stim_text_label_b.draw()
             stim_text_label_c.draw()
             stim_text_label_d.draw()
-            stim_text_ai_prompt.draw()
+            stim_text_test_prompt.draw()
             test_slider.draw()
             if ai_use:
                 stim_text_ai_shown.draw()
