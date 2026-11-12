@@ -177,7 +177,7 @@ stim_slider_ai_prompt   = visual.Slider(win,
                                         size=(0.52, 0.15))
 
 
-questions               = [['What brain regions were primarily involved in decision-making?'],
+list_test_questions     = [['What brain regions were primarily involved in decision-making?'],
                            ['What is the "framing effect"?'],
                            ["How did cognitive effort differ when participants made gain-related decisions?"],
                            ['What theoretical explanation does the paper propose for the framing effect?'],
@@ -207,111 +207,107 @@ questions               = [['What brain regions were primarily involved in decis
                            ['What did the meta-analysis find regarding the influence of phobia type on treatment '
                             'outcomes?']]
 
-correct_answers = [['Prefrontal and parietal cortices'],
-                   ['People make different decisions depending on whether options are framed as gains or losses'],
-                   ['Choosing a sure gain required less cognitive effort than choosing a risky gain'],
-                   ['Individuals seek to make good decisions while minimizing cognitive effort'],
-                   ['How psychological changes occur through different treatments'],
-                   ['Expectations of personal efficacy'],
-                   ['Social comparison'],
-                   ['Enhancement of self-efficacy through mastery experiences'],
-                   ['Flexibility, proactivity, innovativeness'],
-                   ['Adaptability'],
-                   ['It increased in the right hemisphere, indicating creative processing'],
-                   ['Sustained engagement and higher cognitive load'],
-                   ['Memory processing component'],
-                   ['No'],
-                   ['Nonchronometric and memory-based'],
-                   ['It does not significantly alter the axis of g relative to scholastic performance'],
-                   ['Exposure-based treatment'],
-                   ['Yes'],
-                   ['In vivo exposure outperformed other methods at post-treatment but not at follow-up'],
-                   ['Treatment effectiveness was not moderated by type of specific phobia']]
+list_test_correct       = [['Prefrontal and parietal cortices'],
+                           ['People make different decisions depending on whether options are framed as gains or '
+                            'losses'],
+                           ['Choosing a sure gain required less cognitive effort than choosing a risky gain'],
+                           ['Individuals seek to make good decisions while minimizing cognitive effort'],
+                           ['How psychological changes occur through different treatments'],
+                           ['Expectations of personal efficacy'],
+                           ['Social comparison'],
+                           ['Enhancement of self-efficacy through mastery experiences'],
+                           ['Flexibility, proactivity, innovativeness'],
+                           ['Adaptability'],
+                           ['It increased in the right hemisphere, indicating creative processing'],
+                           ['Sustained engagement and higher cognitive load'],
+                           ['Memory processing component'],
+                           ['No'],
+                           ['Nonchronometric and memory-based'],
+                           ['It does not significantly alter the axis of g relative to scholastic performance'],
+                           ['Exposure-based treatment'],
+                           ['Yes'],
+                           ['In vivo exposure outperformed other methods at post-treatment but not at follow-up'],
+                           ['Treatment effectiveness was not moderated by type of specific phobia']]
 
-incorrect_column_1 = [['Occipital and temporal cortices'],
-                      ['People make identical decisions regardless of how options are described'],
-                      ['Choosing a risky gain required less cognitive effort than choosing a sure gain'],
-                      ['Emotional responses completely override cognitive processing'],
-                      ['How biological changes affect behavior'],
-                      ['External rewards'],
-                      ['Vicarious experience'],
-                      ['Increased anxiety and reduced motivation'],
-                      ['Intelligence, memory, attention'],
-                      ['Memory capacity'],
-                      ['It decreased equally in both hemispheres'],
-                      ['Reduced cognitive engagement during the task'],
-                      ['Emotional processing component'],
-                      ['Yes'],
-                      ['Chronometric and perception-based'],
-                      ['It shifts the axis of g significantly in factorial space'],
-                      ['No treatment'],
-                      ['No'],
-                      ['In vivo exposure was less effective than imaginal exposure at all times'],
-                      ['Only animal phobias showed improvement']]
+list_test_incorrect_c1  = [['Occipital and temporal cortices'],
+                           ['People make identical decisions regardless of how options are described'],
+                           ['Choosing a risky gain required less cognitive effort than choosing a sure gain'],
+                           ['Emotional responses completely override cognitive processing'],
+                           ['How biological changes affect behavior'],
+                           ['External rewards'],
+                           ['Vicarious experience'],
+                           ['Increased anxiety and reduced motivation'],
+                           ['Intelligence, memory, attention'],
+                           ['Memory capacity'],
+                           ['It decreased equally in both hemispheres'],
+                           ['Reduced cognitive engagement during the task'],
+                           ['Emotional processing component'],
+                           ['Yes'],
+                           ['Chronometric and perception-based'],
+                           ['It shifts the axis of g significantly in factorial space'],
+                           ['No treatment'],
+                           ['No'],
+                           ['In vivo exposure was less effective than imaginal exposure at all times'],
+                           ['Only animal phobias showed improvement']]
 
-incorrect_column_2 = [[''],
-                      [''],
-                      ['Both risky and sure gains required equal cognitive effort'],
-                      ['Individuals aim to maximize outcomes without regard to effort'],
-                      [''],
-                      [''],
-                      ['Performance accomplishments'],
-                      ['Decrease in physiological arousal only'],
-                      [''],
-                      [''],
-                      ['It increased in the left hemisphere only'],
-                      ['Increased emotional stress only'],
-                      [''],
-                      [''],
-                      ['Language-specific and social'],
-                      ['It weakens the relationship between g and scholastic performance'],
-                      [''],
-                      [''],
-                      ['In vivo exposure had no significant effect compared to virtual reality'],
-                      ['Treatment outcomes were strongly dependent on phobia type']]
+list_test_incorrect_c2  = [[''],
+                           [''],
+                           ['Both risky and sure gains required equal cognitive effort'],
+                           ['Individuals aim to maximize outcomes without regard to effort'],
+                           [''],
+                           [''],
+                           ['Performance accomplishments'],
+                           ['Decrease in physiological arousal only'],
+                           [''],
+                           [''],
+                           ['It increased in the left hemisphere only'],
+                           ['Increased emotional stress only'],
+                           [''],
+                           [''],
+                           ['Language-specific and social'],
+                           ['It weakens the relationship between g and scholastic performance'],
+                           [''],
+                           [''],
+                           ['In vivo exposure had no significant effect compared to virtual reality'],
+                           ['Treatment outcomes were strongly dependent on phobia type']]
 
-incorrect_column_3 = [[''],
-                      [''],
-                      ['Cognitive effort was only measured for loss-related decisions'],
-                      ['Decisions are made randomly when uncertainty is high'],
-                      [''],
-                      [''],
-                      ['Physiological states'],
-                      ['Elimination of all defensive behaviors immediately'],
-                      [''],
-                      [''],
-                      ['It showed no significant change across regions'],
-                      ['Lack of involvement in decision-making'],
-                      [''],
-                      [''],
-                      ['Motor-based and time-dependent'],
-                      ['It eliminates the need for traditional psychometric measures'],
-                      [''],
-                      [''],
-                      ['In vivo exposure was only effective in single-session treatments'],
-                      ['Certain phobia types responded significantly better than others']]
+list_test_incorrect_c3  = [[''],
+                           [''],
+                           ['Cognitive effort was only measured for loss-related decisions'],
+                           ['Decisions are made randomly when uncertainty is high'],
+                           [''],
+                           [''],
+                           ['Physiological states'],
+                           ['Elimination of all defensive behaviors immediately'],
+                           [''],
+                           [''],
+                           ['It showed no significant change across regions'],
+                           ['Lack of involvement in decision-making'],
+                           [''],
+                           [''],
+                           ['Motor-based and time-dependent'],
+                           ['It eliminates the need for traditional psychometric measures'],
+                           [''],
+                           [''],
+                           ['In vivo exposure was only effective in single-session treatments'],
+                           ['Certain phobia types responded significantly better than others']]
 
-difficulty = np.array(
-    [["easy"], ["easy"], ["hard"], ["hard"], ["easy"], ["easy"], ["hard"], ["hard"], ["easy"], ["easy"], ["hard"],
-     ["hard"], ["easy"], ["easy"], ["hard"], ["hard"], ["easy"], ["easy"], ["hard"], ["hard"], ],
-    dtype=np.dtypes.StringDType)
+array_difficulty        = np.array(
+                          [["easy"], ["easy"], ["hard"], ["hard"],
+                           ["easy"], ["easy"], ["hard"], ["hard"],
+                           ["easy"], ["easy"], ["hard"], ["hard"],
+                           ["easy"], ["easy"], ["hard"], ["hard"],
+                           ["easy"], ["easy"], ["hard"], ["hard"],
+                           ], dtype=np.dtypes.StringDType)
 
-ai_correctness = np.array([
-    ["correct"],
-    ["correct"],
-    ["correct"],
-    ["correct"],
-    ["correct"],
-    ["incorrect"],
-    ["incorrect"],
-    ["incorrect"],
-    ["incorrect"],
-    ["incorrect"],
-])
+array_ai_correct        = np.array(
+                          [["correct"], ["correct"], ["correct"], ["correct"], ["correct"],
+                           ["incorrect"], ["incorrect"], ["incorrect"], ["incorrect"], ["incorrect"]]
+                           )
 
 rng                     = np.random.default_rng()
 
-n_test_items            = len(questions)
+n_test_items            = len(list_test_questions)
 
 test_score              = int()
 
@@ -324,23 +320,23 @@ text_id                 = [[0], [0], [0], [0],
                            [4], [4], [4], [4]]
 
 text_id                 = np.array(text_id, dtype=np.dtypes.StringDType)
-questions               = np.array(questions, dtype=np.dtypes.StringDType)
-correct_answers         = np.array(correct_answers, dtype=np.dtypes.StringDType)
-incorrect_column_1      = np.array(incorrect_column_1, dtype=np.dtypes.StringDType)
-incorrect_column_2      = np.array(incorrect_column_2, dtype=np.dtypes.StringDType)
-incorrect_column_3      = np.array(incorrect_column_3, dtype=np.dtypes.StringDType)
+questions               = np.array(list_test_questions, dtype=np.dtypes.StringDType)
+correct_answers         = np.array(list_test_correct, dtype=np.dtypes.StringDType)
+incorrect_column_1      = np.array(list_test_incorrect_c1, dtype=np.dtypes.StringDType)
+incorrect_column_2      = np.array(list_test_incorrect_c2, dtype=np.dtypes.StringDType)
+incorrect_column_3      = np.array(list_test_incorrect_c3, dtype=np.dtypes.StringDType)
 
 answers                 = np.column_stack([correct_answers, incorrect_column_1, incorrect_column_2, incorrect_column_3])
 
 for idx in range(20):
     rng.shuffle(answers[idx], axis=0)
 
-rng.shuffle(ai_correctness, axis=0)
-ai_correctness_first_half = ai_correctness
-rng.shuffle(ai_correctness, axis=0)
-ai_correctness_second_half = ai_correctness
+rng.shuffle(array_ai_correct, axis=0)
+ai_correctness_first_half = array_ai_correct
+rng.shuffle(array_ai_correct, axis=0)
+ai_correctness_second_half = array_ai_correct
 
-test_full               = np.column_stack([text_id, indexes, questions, answers, correct_answers, difficulty])
+test_full               = np.column_stack([text_id, indexes, questions, answers, correct_answers, array_difficulty])
 
 test_first_half         = test_full[0::2]
 test_second_half        = test_full[1::2]
