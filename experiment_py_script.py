@@ -146,41 +146,48 @@ dict_survey_options     = {"Strongly  disagree": -2, "Disagree": -1, "Neutral": 
 # Test phase setup
 stim_text_ai_prompt     = visual.TextStim(win,
                                           pos=(0, 0.50),
-                                          font=str_font)
+                                          font=str_font
+                                          )
 
 stim_text_test_prompt   = visual.TextStim(win,
                                           pos=(0, 0.50),
-                                          font=str_font)
+                                          font=str_font
+                                          )
 
 
 stim_text_label_a       = visual.TextStim(win,
                                          pos=(-0.75, 0.15),
                                          height=0.10,
                                          text="A",
-                                         font=str_font)
+                                         font=str_font
+                                          )
 
 stim_text_label_b       = visual.TextStim(win,
                                           pos=(-0.25, 0.15),
                                           height=0.10,
                                           text="B",
-                                          font=str_font)
+                                          font=str_font
+                                          )
 
 stim_text_label_c       = visual.TextStim(win,
                                           pos=(0.25, 0.15),
                                           height=0.10,
                                           text="C",
-                                          font=str_font)
+                                          font=str_font
+                                          )
 
 stim_text_label_d       = visual.TextStim(win,
                                           pos=(0.75, 0.15),
                                           height=0.10,
                                           text="D",
-                                          font=str_font)
+                                          font=str_font
+                                          )
 
 stim_text_ai_shown      = visual.TextStim(win,
                                           pos=(0, -0.75),
                                           height=0.065,
-                                          font=str_font)
+                                          font=str_font
+                                          )
 
 stim_slider_ai_prompt   = visual.Slider(win,
                                         style="radio",
@@ -189,7 +196,8 @@ stim_slider_ai_prompt   = visual.Slider(win,
                                         font=str_font,
                                         labelHeight=0.085,
                                         labelWrapWidth=0.45,
-                                        size=(0.52, 0.15))
+                                        size=(0.52, 0.15)
+                                        )
 
 
 list_test_questions     = [['What brain regions were primarily involved in decision-making?'],
