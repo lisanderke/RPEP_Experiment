@@ -738,8 +738,11 @@ experiment_handler.addData("total_time_s", total_time)
 
 stim_text_info.text     = ("This is the end of the experiment.\n\n"
                            f"Your final score is {test_score}/20. \nYou used GAI {total_ai_use} times. \n\n"
-                           "Signal to the experimenter that you have completed the test.\n\n"
-                           "Thank you very much for your participation!\n\n")
+                           "If you would like to learn more about the manipulations this experiment uses or the "
+                           "results of the study, let the researcher know and they will contact you at the end of the "
+                           "study."
+                           "Signal to the experimenter that you have completed the test.\n"
+                           "Thank you very much for your participation!")
 
 stim_text_info.draw()
 win.flip()
