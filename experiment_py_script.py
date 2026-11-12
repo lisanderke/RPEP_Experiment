@@ -95,7 +95,7 @@ stim_slider_survey      = visual.Slider(win,
                                         font=str_font,
                                         pos=(0, -0.35),
                                         style="radio",
-                                        labels=["Strongly  disagree", "Disagree ", "Neutral", "Agree",
+                                        labels=["Strongly  disagree", "Disagree", "Neutral", "Agree",
                                                 "Strongly  agree"],
                                         ticks=[1, 2, 3, 4, 5]
                                         )
@@ -131,7 +131,7 @@ dict_survey_items       = {"ctar_01": "I lose sleep over worrying about exams.",
                                               "of the GenAI tools.",
                            }
 
-dict_survey_options     = {"Strongly  disagree": -2, "Disagree ": -1, "Neutral": 0, "Agree": 1, "Strongly  agree": 2}
+dict_survey_options     = {"Strongly  disagree": -2, "Disagree": -1, "Neutral": 0, "Agree": 1, "Strongly  agree": 2}
 
 # Test phase setup
 stim_text_ai_prompt     = visual.TextStim(win,
