@@ -609,10 +609,15 @@ for trial in trials:
         numbers.sort()
         numbers_incorrect.sort()
 
-        test_slider = visual.Slider(win=win, pos=(0, 0), style="radio",
-                                    labels=[answer_A, answer_B, answer_C, answer_D],
-                                    ticks=[1, 2, 3, 4], units="norm", font=str_font, labelHeight=0.085, labelWrapWidth=0.45,
-                                    size=(1.5, 0.15))
+        test_slider     = visual.Slider(win,
+                                        style="radio",
+                                        labels=[answer_A, answer_B, answer_C, answer_D],
+                                        ticks=[1, 2, 3, 4],
+                                        font=str_font,
+                                        labelHeight=0.085,
+                                        labelWrapWidth=0.45,
+                                        size=(1.5, 0.15)
+                                        )
         if trial["ai_accuracy"] == "correct":
             stim_text_ai_shown.text = f"AI says the correct answer is: either {options[numbers[0]]} or {options[numbers[1]]}"
         else:
