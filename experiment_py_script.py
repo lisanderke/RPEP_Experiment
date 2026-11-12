@@ -390,6 +390,7 @@ stim_text_info.text     = (f"During the exam, you will have the opportunity to u
                            f"mistakes. \n\n") + str_continue
 
 stim_text_info.draw()
+stim_text_space_bar.draw()
 win.flip()
 if event.waitKeys(keyList=list_allowed_keys)[0] == 'escape':
     win.close()
@@ -400,6 +401,7 @@ stim_text_info.text     = (f"If anything is unclear at this time or if you have 
                            f"stop the experiment at any point, please let the researcher know.\n\n")+ str_continue
 
 stim_text_info.draw()
+stim_text_space_bar.draw()
 win.flip()
 if event.waitKeys(keyList=list_allowed_keys)[0] == 'escape':
     win.close()
@@ -504,9 +506,10 @@ stim_text_info.text = (
         f"You will now complete the multiple choice exam based on the texts you studied. There are 20 questions "
         f"in total. For each question, you will get the opportunity to use AI to help you solve the question. "
         f"However, please be aware that the AI can make mistakes.\n"
-        f"Before the exam starts, an example question will be shown so you can try asking the AI for help.\n"
-        + str_continue)
+        f"Before the exam starts, an example question will be shown so you can try asking the AI for help.")
+
 stim_text_info.draw()
+stim_text_space_bar.draw()
 win.flip()
 if event.waitKeys(keyList=list_allowed_keys)[0] == 'escape':
     win.close()
@@ -536,13 +539,15 @@ for trial in trials:
         test_half = "second_half"
     if test_half == "second_half" and counter == 0:
         stim_text_info.text = (f"This is the halfway point of the test. \nSo far, your score is "
-                                   f"{test_score}/{int(trial['exp_indexes'])}. \nYou used GAI {total_ai_use} times. "
-                                   f"\n\n") + str_continue
+                                   f"{test_score}/{int(trial['exp_indexes'])}. \nYou used GAI {total_ai_use} times.")
+
         stim_text_info.draw()
+        stim_text_space_bar.draw()
         win.flip()
         if event.waitKeys(keyList=list_allowed_keys)[0] == 'escape':
             win.close()
             core.quit()
+
         experiment_handler.addData("break_screen", "yes")
         counter += 1
 
