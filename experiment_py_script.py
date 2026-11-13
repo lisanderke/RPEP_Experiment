@@ -63,8 +63,8 @@ import pandas as pd
 from psychopy import visual, event, core, gui, data
 
 # initialize countdown timer used in the study phase
-minutes                 = 20
-seconds                 = 0
+minutes                 = 20 # set to 20 during lab session!
+seconds                 = 0  # set to 0 during lab session!
 duration                = minutes * 60 + seconds
 remaining_time          = duration
 
