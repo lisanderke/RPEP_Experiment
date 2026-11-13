@@ -395,7 +395,7 @@ stim_text_info.text     = ("Hello and welcome to this experiment!\n"
                            "First you get 20 minutes to study some texts.\n"
                            "Then you will complete a short survey about test taking and studying.\n"
                            "Finally, you will take part in an exam on the texts you studied.\n"
-                           "During the exam, you can choose to solve questions with or without AI\n"
+                           "During the exam, you can choose to solve questions with or without AI.\n\n"
                            "Please be aware that the AI can make mistakes.")
 
 stim_text_info.draw()
@@ -740,7 +740,7 @@ stim_text_info.text     = ("This is the end of the experiment.\n\n"
                            f"Your final score is {test_score}/20. \nYou used GAI {total_ai_use} times. \n\n"
                            "If you would like to learn more about the manipulations this experiment uses or the "
                            "results of the study, let the researcher know and they will contact you at the end of the "
-                           "study\n"
+                           "study.\n\n"
                            "Signal to the experimenter that you have completed the test.\n"
                            "Thank you very much for your participation!")
 
