@@ -384,6 +384,8 @@ trial_list              = pd.DataFrame.to_dict(trialsDF, orient="records")
 
 trials                  = data.TrialHandler(trial_list, nReps=1, method='sequential')
 
+# experiment_handler.addLoop(trials)
+
 ## Start of the experiment
 total_time              = core.Clock()
 start_time              = time.strftime("%H:%M:%S", time.localtime())
