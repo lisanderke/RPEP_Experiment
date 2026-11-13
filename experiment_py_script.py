@@ -62,6 +62,12 @@ import numpy as np
 import pandas as pd
 from psychopy import visual, event, core, gui, data
 
+# initialize countdown timer used in the study phase
+minutes                 = 20
+seconds                 = 0
+duration                = minutes * 60 + seconds
+remaining_time          = duration
+
 ## Data file management
 # Set working directory to save participant data to same location as experiment script
 str_working_directory   = os.getcwd() + "\\"
@@ -467,12 +473,6 @@ win.flip()
 if event.waitKeys(keyList=list_allowed_keys)[0] == 'escape':
     win.close()
     core.quit()
-
-# initialize countdown timer
-minutes                 = 0
-seconds                 = 3
-duration                = minutes * 60 + seconds
-remaining_time          = duration
 
 # show and update countdown timer
 for _ in range(duration):
