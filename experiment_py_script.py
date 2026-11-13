@@ -614,7 +614,7 @@ number                  = 0
 
 counter                 = 0
 numbers_incorrect       = []
-for trial in trials:
+for trial in trials_test:
     if int(trial["exp_indexes"]) < 10:
         test_half = "first_half"
     else:
