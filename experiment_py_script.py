@@ -181,6 +181,21 @@ dict_survey_items       = {"ctar_01": "I lose sleep over worrying about exams.",
                                               "of the GenAI tools.",
                            }
 
+list_trials_survey      = []
+
+for survey_idx in dict_survey_items:
+    list_trials_survey.append({"survey_idx": survey_idx,
+                               "survey_item": dict_survey_items[survey_idx],
+                               "survey_resp": "None",
+                               "survey_resp_score": "None",
+                               "survey_rt_item": "None",
+                               "survey_rt_total": "None",
+                               })
+
+trials_survey           = data.TrialHandler(list_trials_survey, nReps=1, method='sequential')
+
+experiment_handler.addLoop(trials_survey)
+
 dict_survey_options     = {"Strongly  disagree": -2, "Disagree": -1, "Neutral": 0, "Agree": 1, "Strongly  agree": 2}
 
 # Test phase setup
@@ -522,9 +537,13 @@ if event.waitKeys(keyList=list_allowed_keys)[0] == 'escape':
     win.close()
     core.quit()
 
-for survey_idx in dict_survey_items: # this wil loop over all survey items
-    item                = dict_survey_items[survey_idx]
-    stim_text_survey_item.text = item
+float_total_rt          = 0.0
+float_total_rt_ctar     = 0.0
+float_total_rt_ai_use   = 0.0
+float_total_rt_dish     = 0.0
+
+for trial in trials_survey: # this will loop over all survey items
+    stim_text_survey_item.text = trial["survey_item"]
     stim_slider_survey.reset()
     my_clock.reset()
 
@@ -534,15 +553,25 @@ for survey_idx in dict_survey_items: # this wil loop over all survey items
         stim_slider_survey.draw()
         win.flip()
 
-    reaction_time       = round(my_clock.getTime(), 3)  # round to 1 millisecond
-
     item_score          = dict_survey_options[stim_slider_survey.rating]
+    reaction_time       = round(my_clock.getTime(), 3)  # round to 1 millisecond
+    float_total_rt      = round(float_total_rt + reaction_time, 3)
 
-    experiment_handler.addData('survey_idx', survey_idx)
-    experiment_handler.addData('survey_item', item)
-    experiment_handler.addData('survey_resp', stim_slider_survey.rating)
-    experiment_handler.addData('survey_resp_score', item_score)
-    experiment_handler.addData('survey_rt', reaction_time)
+    trial["survey_resp"] = stim_slider_survey.rating
+    trial["survey_resp_score"] = item_score
+    trial["survey_rt_item"] = reaction_time
+    trial["survey_rt_total"] = float_total_rt
+
+    if "ctar" in trial["survey_idx"]:
+        float_total_rt_ctar = round(float_total_rt_ctar + reaction_time, 3)
+        trial["survey_rt_total_ctar"] = float_total_rt_ctar
+    elif "ai_use" in trial["survey_idx"]:
+        float_total_rt_ai_use = round(float_total_rt_ai_use + reaction_time, 3)
+        trial["survey_rt_total_ai_use"] = float_total_rt_ai_use
+    else:
+        float_total_rt_dish = round(float_total_rt_dish + reaction_time, 3)
+        trial["survey_rt_total_dish"] = float_total_rt_dish
+
     experiment_handler.nextEntry()
 
 
