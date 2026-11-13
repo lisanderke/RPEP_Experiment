@@ -459,7 +459,7 @@ stim_text_info.text     = (f"In this part of the experiment, you will study the 
                            f"you are expected to complete a knowledge test (multiple choice exam) on the content of "
                            f"these texts. Please turn over the texts after the timer starts. You will be alerted when "
                            f"the timer runs out.")
-stim_text_space.text = "Press the space bar to start the timer"
+stim_text_space.text    = "Press the space bar to start the timer"
 
 stim_text_info.draw()
 stim_text_space.draw()
@@ -556,10 +556,9 @@ if event.waitKeys(keyList=list_allowed_keys)[0] == 'escape':
     win.close()
     core.quit()
 
-stim_text_info.text = (
-        f"You will now complete the multiple choice exam based on the texts you studied. There are 20 questions "
-        f"in total. For each question, you will get the opportunity to use AI to help you solve the question. "
-        f"However, please be aware that the AI can make mistakes.")
+stim_text_info.text     = ("You will now complete the multiple choice exam based on the texts you studied. There are "
+                           "20 questions in total. For each question, you will get the opportunity to use AI to help "
+                           "you solve the question. However, please be aware that the AI can make mistakes.")
 stim_text_space.text    = "Press the space bar to start the exam"
 
 stim_text_info.draw()
@@ -569,23 +568,23 @@ if event.waitKeys(keyList=list_allowed_keys)[0] == 'escape':
     win.close()
     core.quit()
 
-test_score = 0
-score = 0
-total_ai_use = 0
-ai_use = 0
-total_answer_rt = 0
-total_ai_use_rt = 0
-options = ["A", "B", "C", "D"]
+test_score              = 0
+score                   = 0
+total_ai_use            = 0
+ai_use                  = 0
+total_answer_rt         = 0
+total_ai_use_rt         = 0
+options                 = ["A", "B", "C", "D"]
 
 answer_A, answer_B, answer_C, answer_D = "", "", "", ""
-show_correct_idx = 0
-number = 0
+show_correct_idx        = 0
+number                  = 0
 
 # Give feedback after 10 questions of the test
 #show score gathered from the first 10 questions
 
-counter = 0
-numbers_incorrect = []
+counter                 = 0
+numbers_incorrect       = []
 for trial in trials:
     if int(trial["exp_indexes"]) < 10:
         test_half = "first_half"
