@@ -422,9 +422,9 @@ trialsDF.columns        = ["text_id", "indexes", "test_question", "test_answer_A
 
 trial_list              = pd.DataFrame.to_dict(trialsDF, orient="records")
 
-trials                  = data.TrialHandler(trial_list, nReps=1, method='sequential')
+trials_test             = data.TrialHandler(trial_list, nReps=1, method='sequential')
 
-# experiment_handler.addLoop(trials)
+experiment_handler.addLoop(trials_test)
 
 ## Start of the experiment
 total_time              = core.Clock()
