@@ -196,7 +196,7 @@ trials_survey           = data.TrialHandler(list_trials_survey, nReps=1, method=
 
 experiment_handler.addLoop(trials_survey)
 
-dict_survey_options     = {"Strongly  disagree": -2, "Disagree": -1, "Neutral": 0, "Agree": 1, "Strongly  agree": 2}
+dict_survey_options     = {"Strongly  disagree": 1, "Disagree": 2, "Neutral": 3, "Agree": 4, "Strongly  agree": 5}
 
 # Test phase setup
 stim_text_ai_prompt     = visual.TextStim(win,
