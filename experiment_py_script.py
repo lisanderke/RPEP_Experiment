@@ -492,8 +492,8 @@ if event.waitKeys(keyList=list_allowed_keys)[0] == 'escape':
 # show and update countdown timer
 for _ in range(duration):
     stim_text_study_timer.text = (
-                            f"{remaining_time // 60 if remaining_time // 60 >= 10 else f'0{remaining_time // 60}'}:"
-                            f"{remaining_time % 60 if remaining_time % 60 >= 10 else f'0{remaining_time % 60}'}"
+                                f"{remaining_time // 60 if remaining_time // 60 >= 10 else f'0{remaining_time // 60}'}:"
+                                f"{remaining_time % 60 if remaining_time % 60 >= 10 else f'0{remaining_time % 60}'}"
                                  )
     stim_text_study_timer.draw()
     win.flip()
